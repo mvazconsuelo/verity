@@ -1,0 +1,6 @@
+[core]
+    remote = seaweed
+['remote "seaweed"']
+    url = s3://knowledge
+    endpointurl = http://localhost:8333
+    region = us-east-1

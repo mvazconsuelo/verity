@@ -1,0 +1,6 @@
+outs:
+- md5: 8f6c36e239ebb2ce840849c59e762ca0.dir
+  size: 1567
+  nfiles: 5
+  hash: md5
+  path: knowledge

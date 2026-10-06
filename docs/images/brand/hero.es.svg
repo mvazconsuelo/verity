@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="100%" role="img" aria-label="Verity — asistente de atención al cliente que responde solo con tu documentación: redactar, trocear, embeber, buscar, responder, evaluar, versionar, aprender">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B0F14"/>
+      <stop offset="100%" stop-color="#0F1722"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#818CF8"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1C2630" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="320" fill="url(#bg)"/>
+  <rect width="1200" height="320" fill="url(#grid)" opacity="0.5"/>
+
+  <!-- marco sutil -->
+  <rect x="1" y="1" width="1198" height="318" fill="none" stroke="#1C2630" stroke-width="2"/>
+
+  <!-- icono: documento + lupa, a la izquierda del título -->
+  <g transform="translate(70,100)">
+    <rect x="0" y="0" width="86" height="110" rx="8" fill="#111827" stroke="#22D3EE" stroke-width="2.5"/>
+    <line x1="16" y1="28" x2="70" y2="28" stroke="#2DD4BF" stroke-width="4" stroke-linecap="round"/>
+    <line x1="16" y1="46" x2="70" y2="46" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+    <line x1="16" y1="64" x2="56" y2="64" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+    <line x1="16" y1="82" x2="60" y2="82" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="78" cy="96" r="22" fill="#0B0F14" stroke="#818CF8" stroke-width="5"/>
+    <line x1="94" y1="112" x2="112" y2="130" stroke="#818CF8" stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+  <!-- título -->
+  <text x="190" y="140" font-family="Helvetica Neue, Arial, sans-serif" font-size="72" font-weight="700" fill="url(#title)">Verity</text>
+  <text x="192" y="178" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#9CA3AF">
+    Asistente de atención al cliente que responde solo con tu documentación
+  </text>
+  <text x="192" y="206" font-family="Helvetica Neue, Arial, sans-serif" font-size="16" fill="#64748B">
+    RAG, guardrails semánticos, evaluación con golden set y versionado de datos — todo local, sin nube
+  </text>
+
+  <!-- pipeline -->
+  <g font-family="Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600">
+    <!-- fondo del riel -->
+    <rect x="70" y="248" width="1060" height="40" rx="20" fill="#0F1722" stroke="#1C2630"/>
+    <g fill="#CBD5E1">
+      <text x="100" y="273">redactar</text>
+      <text x="213" y="273" fill="#475569">→</text>
+      <text x="240" y="273">trocear</text>
+      <text x="340" y="273" fill="#475569">→</text>
+      <text x="367" y="273">embeber</text>
+      <text x="480" y="273" fill="#475569">→</text>
+      <text x="507" y="273">buscar</text>
+      <text x="600" y="273" fill="#475569">→</text>
+      <text x="627" y="273">responder</text>
+      <text x="755" y="273" fill="#475569">→</text>
+      <text x="782" y="273">evaluar</text>
+      <text x="880" y="273" fill="#475569">→</text>
+      <text x="907" y="273">versionar</text>
+      <text x="1025" y="273" fill="#475569">→</text>
+      <text x="1052" y="273" fill="#22D3EE">aprender</text>
+    </g>
+  </g>
+</svg>

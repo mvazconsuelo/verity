@@ -1,0 +1,82 @@
+# Pull request CI: the CODE quality gate. Everything else (documents, the real exam, building and
+# running the bot) happens locally, by hand — see app/run/run.sh. There's no deploy pipeline: the
+# bot runs on your own machine, so there's nowhere for GitHub Actions to deploy it to.
+# If anything fails, the change can't be merged (with branch protection enabled).
+#
+#   validate   compose is valid, secrets in the history, Dockerfiles, workflows and scripts
+#   test       pytest for the gateway and the document loaders
+#
+# Does NOT run the bot's exam: it needs the real knowledge/ documents (pulled from DVC/SeaweedFS) and
+# real Ollama models — both only available on your machine. Run it with: app/run/run.sh.
+name: CI
+
+on:
+  pull_request:
+    paths-ignore:
+      - "README.md"
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # gitleaks scans the whole history
+
+      - name: The compose file is valid (alone and with the exam variant)
+        env:
+          OLLAMA_CACHE_DIR: /tmp/ollama
+        run: |
+          docker compose -f app/docker-compose.yml --profile evaluator config -q
+          docker compose -f app/docker-compose.yml -f app/compose.ci.yml --profile evaluator config -q
+
+      - name: Secrets in the history (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Dockerfiles (hadolint)
+        run: |
+          for f in app/docker/*/Dockerfile; do
+            echo "== $f"
+            docker run --rm -i hadolint/hadolint hadolint --ignore DL3008 - < "$f"
+          done
+
+      - name: Workflows and actions (actionlint)
+        run: docker run --rm -v "$PWD":/repo -w /repo rhysd/actionlint:latest
+
+      - name: Scripts (shellcheck)
+        run: shellcheck -x -P SCRIPTDIR app/run/*.sh app/dvc-setup.sh
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The versions come from app/docker-compose.yml: a single source of truth
+      - name: Read versions
+        id: v
+        run: |
+          sed -nE 's/^ *(PYTHON_VERSION|UV_VERSION): *"?([^" ]+)"?.*/\1=\2/p' app/docker-compose.yml >> "$GITHUB_OUTPUT"
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ steps.v.outputs.UV_VERSION }}
+          enable-cache: true
+
+      - name: uv.lock matches pyproject.toml
+        working-directory: app
+        run: uv lock --check
+
+      - name: pytest
+        working-directory: app
+        run: uv run --frozen --group test --python ${{ steps.v.outputs.PYTHON_VERSION }} pytest -q

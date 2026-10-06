@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+.history/
+.pytest_cache/
+.ruff_cache/
+
+# app/knowledge/ is your real documents (the official folder): it's not ignored here directly.
+# "dvc add knowledge" (run from app/) writes its own app/.gitignore and takes over managing this on
+# its own — git then tracks only the small knowledge.dvc pointer file, not the documents themselves.
+# Exam report (see app/eval/run_eval.py): generated on every run, never committed
+/app/eval/report/

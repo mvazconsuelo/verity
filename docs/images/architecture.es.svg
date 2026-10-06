@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 650" width="100%" role="img" aria-label="Arquitectura de Verity: usuario, gateway, ollama, indexer, índice, evaluador manual, DVC con SeaweedFS para versionar documentos, y GitHub Actions aislado (solo lint y pytest, sin tocar el runtime)">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#22D3EE"/>
+    </marker>
+    <marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748B"/>
+    </marker>
+  </defs>
+
+  <rect width="1040" height="650" fill="#0B0F14"/>
+
+  <!-- ══ CI, aislado a propósito ══ -->
+  <rect x="30" y="30" width="300" height="86" rx="10" fill="#0F1722" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="180" y="62" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="700" fill="#CBD5E1">GitHub Actions</text>
+  <text x="180" y="84" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="13" fill="#94A3B8">ci.yml — lint + pytest, por PR</text>
+  <text x="180" y="102" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#F59E0B">✗ no toca el runtime: no hay despliegue remoto</text>
+
+  <!-- ══ fila principal ══ -->
+  <rect x="200" y="260" width="140" height="56" rx="10" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <text x="270" y="293" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="17" font-weight="700" fill="#E5E7EB">usuario</text>
+
+  <rect x="430" y="260" width="160" height="70" rx="10" fill="#111827" stroke="#22D3EE" stroke-width="2.5"/>
+  <text x="510" y="290" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="17" font-weight="700" fill="#E5E7EB">gateway</text>
+  <text x="510" y="308" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#94A3B8">FastAPI</text>
+
+  <rect x="700" y="230" width="220" height="100" rx="10" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <text x="810" y="268" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="17" font-weight="700" fill="#E5E7EB">ollama</text>
+  <text x="810" y="290" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#94A3B8">qwen2.5:1.5b (chat)</text>
+  <text x="810" y="308" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#94A3B8">bge-m3 (embeddings)</text>
+
+  <!-- usuario -> gateway -->
+  <line x1="340" y1="288" x2="424" y2="288" stroke="#22D3EE" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="382" y="276" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#67E8F9">POST /ask</text>
+
+  <!-- gateway <-> ollama -->
+  <line x1="596" y1="288" x2="694" y2="270" stroke="#22D3EE" stroke-width="2.5" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="645" y="256" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#67E8F9">chat + embeddings</text>
+
+  <!-- ══ fila de indexado ══ -->
+  <rect x="30" y="420" width="150" height="60" rx="10" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <text x="105" y="455" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="700" fill="#E5E7EB">knowledge/</text>
+
+  <rect x="240" y="420" width="150" height="60" rx="10" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <text x="315" y="455" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="700" fill="#E5E7EB">indexer</text>
+
+  <rect x="430" y="420" width="160" height="60" rx="10" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <text x="510" y="450" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="700" fill="#E5E7EB">índice</text>
+  <text x="510" y="468" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#94A3B8">index.db (sqlite-vec)</text>
+
+  <rect x="700" y="420" width="220" height="60" rx="10" fill="#0F1722" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="810" y="450" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="700" fill="#CBD5E1">evaluator</text>
+  <text x="810" y="468" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#94A3B8">golden set, a mano</text>
+
+  <!-- knowledge -> indexer -->
+  <line x1="180" y1="450" x2="234" y2="450" stroke="#64748B" stroke-width="2.5" marker-end="url(#arrow-muted)"/>
+  <text x="207" y="438" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#94A3B8">al construir la imagen</text>
+
+  <!-- indexer -> ollama -->
+  <line x1="340" y1="420" x2="700" y2="312" stroke="#64748B" stroke-width="2" marker-end="url(#arrow-muted)"/>
+  <text x="400" y="400" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#94A3B8">embeber chunks (una vez, al arrancar)</text>
+
+  <!-- indexer -> índice -->
+  <line x1="390" y1="450" x2="424" y2="450" stroke="#64748B" stroke-width="2.5" marker-end="url(#arrow-muted)"/>
+  <text x="407" y="438" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#94A3B8">escribe</text>
+
+  <!-- índice -> gateway (solo lectura) -->
+  <line x1="510" y1="420" x2="510" y2="336" stroke="#64748B" stroke-width="2" stroke-dasharray="3 4" marker-end="url(#arrow-muted)"/>
+  <text x="565" y="410" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#94A3B8">solo lectura</text>
+
+  <!-- evaluator -> gateway -->
+  <line x1="770" y1="420" x2="594" y2="322" stroke="#94A3B8" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow-muted)"/>
+  <text x="700" y="400" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#94A3B8">examen manual (app/run/run.sh)</text>
+
+  <!-- ══ DVC + SeaweedFS ══ -->
+  <rect x="30" y="545" width="400" height="80" rx="10" fill="#0F1722" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="230" y="578" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="700" fill="#CBD5E1">DVC → SeaweedFS</text>
+  <text x="230" y="598" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#94A3B8">perfil "dvc" — versiona knowledge/, con interfaz web (:8888)</text>
+  <text x="230" y="615" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#64748B">fuera del camino de las peticiones: no corre con "docker compose up"</text>
+
+  <!-- knowledge <-> DVC/SeaweedFS -->
+  <line x1="105" y1="480" x2="105" y2="539" stroke="#64748B" stroke-width="2.5" marker-end="url(#arrow-muted)" marker-start="url(#arrow-muted)"/>
+  <text x="170" y="512" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#94A3B8">dvc push / pull</text>
+</svg>

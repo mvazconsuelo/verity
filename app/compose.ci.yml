@@ -1,0 +1,13 @@
+# SOLO PARA EL CI. Se combina con el compose principal (-f docker-compose.yml -f compose.ci.yml, desde app/).
+#
+# Guarda los modelos de Ollama en una carpeta normal del runner, en lugar de un volumen de Docker,
+# para que el CI pueda cachearla entre ejecuciones y no descargar ~2.5 GB cada vez.
+# OLLAMA_CACHE_DIR la define el workflow.
+
+volumes:
+  ollama_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${OLLAMA_CACHE_DIR:?define OLLAMA_CACHE_DIR}

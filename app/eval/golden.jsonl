@@ -1,0 +1,22 @@
+{"id": "q01", "question": "¿Cuánto tarda el envío estándar?", "expected": "De 3 a 5 días hábiles.", "keywords": ["3 a 5"], "source": "envios.md", "answerable": true}
+{"id": "q02", "question": "¿Cuánto cuesta el envío express?", "expected": "$12.99.", "keywords": ["12.99"], "source": "envios.md", "answerable": true}
+{"id": "q03", "question": "¿A partir de qué monto el envío estándar es gratis?", "expected": "Desde $50.", "keywords": ["50"], "source": "envios.md", "answerable": true}
+{"id": "q04", "question": "¿Cuánto dura la garantía de una heladera?", "expected": "24 meses.", "keywords": ["24"], "source": "garantia.md", "answerable": true}
+{"id": "q05", "question": "¿Qué necesito para reclamar la garantía?", "expected": "La factura de compra y describir la falla por el formulario de soporte.", "keywords": ["factura"], "source": "garantia.md", "answerable": true}
+{"id": "q06", "question": "¿Qué no cubre la garantía?", "expected": "Daños por mal uso, golpes, ni desgaste normal del producto.", "keywords": ["mal uso"], "source": "garantia.md", "answerable": true}
+{"id": "q07", "question": "¿Cuánto tiempo es válida una tarjeta de regalo?", "expected": "12 meses desde la compra.", "keywords": ["12"], "source": "tarjetas_de_regalo.md", "answerable": true}
+{"id": "q08", "question": "¿Cuál es el monto máximo de una tarjeta de regalo?", "expected": "$500.", "keywords": ["500"], "source": "tarjetas_de_regalo.md", "answerable": true}
+{"id": "q09", "question": "¿Cuántos puntos necesito para llegar al nivel Oro?", "expected": "1500 puntos.", "keywords": ["1500"], "source": "programa_de_puntos.md", "answerable": true}
+{"id": "q10", "question": "¿Qué descuento tiene el nivel Platino?", "expected": "12 %.", "keywords": ["12"], "source": "programa_de_puntos.md", "answerable": true}
+{"id": "q11", "question": "¿Cuál es la capital de Francia?", "expected": "No tengo esa información.", "keywords": [], "source": null, "answerable": false}
+{"id": "q12", "question": "¿Tienen tienda física en Madrid?", "expected": "No tengo esa información.", "keywords": [], "source": null, "answerable": false}
+{"id": "q13", "question": "¿Cuánto tarda el envío express?", "expected": "De 24 a 48 horas.", "keywords": ["24", "48"], "source": "envios.md", "answerable": true}
+{"id": "q14", "question": "¿Cuánto cuesta el envío estándar?", "expected": "$4.99.", "keywords": ["4.99"], "source": "envios.md", "answerable": true}
+{"id": "q15", "question": "¿Puedo pedir envío express para un pedido de más de 20 kg?", "expected": "No, el envío express no está disponible para pedidos de más de 20 kg.", "keywords": ["20 kg"], "source": "envios.md", "answerable": true}
+{"id": "q16", "question": "¿Hacen envíos al extranjero?", "expected": "No, no enviamos al extranjero.", "keywords": ["extranjero"], "source": "envios.md", "answerable": true}
+{"id": "q17", "question": "¿Cuánto dura la garantía de un producto que no sea un electrodoméstico grande?", "expected": "12 meses.", "keywords": ["12 meses"], "source": "garantia.md", "answerable": true}
+{"id": "q18", "question": "¿Cuánto tarda en responder un reclamo de garantía?", "expected": "5 días hábiles.", "keywords": ["5 días"], "source": "garantia.md", "answerable": true}
+{"id": "q19", "question": "¿Cuántos puntos necesito para el nivel Bronce?", "expected": "0 puntos.", "keywords": ["0 puntos"], "source": "programa_de_puntos.md", "answerable": true}
+{"id": "q20", "question": "¿Cuántos puntos necesito para llegar al nivel Plata?", "expected": "500 puntos.", "keywords": ["500"], "source": "programa_de_puntos.md", "answerable": true}
+{"id": "q21", "question": "¿Cuántos puntos necesito para llegar al nivel Platino?", "expected": "3000 puntos.", "keywords": ["3000"], "source": "programa_de_puntos.md", "answerable": true}
+{"id": "q22", "question": "¿Cómo puedo comprar una tarjeta de regalo?", "expected": "Se compra en la página web y se envía por correo electrónico al destinatario de forma inmediata.", "keywords": ["página web"], "source": "tarjetas_de_regalo.md", "answerable": true}

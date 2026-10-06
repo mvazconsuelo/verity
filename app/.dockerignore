@@ -1,0 +1,11 @@
+# Los builds que usan la raíz del repo como contexto (gateway, evaluator) solo necesitan esto.
+# Todo lo demás (índice, .git, evaluación, env...) no va en la imagen.
+*
+!pyproject.toml
+!uv.lock
+!gateway
+!rag
+!prompts
+!knowledge
+!docker
+**/__pycache__

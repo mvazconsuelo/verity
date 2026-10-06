@@ -1,0 +1,163 @@
+# Verity: asistente de atención al cliente que responde solo con la documentación del negocio.
+#
+# Corre ENTERO en tu máquina: no hay nube ni despliegue remoto. "docker compose up" en esta carpeta
+# ES el despliegue. Los secretos (API_KEYS, ORIGIN_VERIFY_SECRET) llegan por variables de entorno de
+# shell, nunca por un archivo versionado; el examen genera una clave efímera.
+#
+#   usuario ──► gateway ──► ollama        (chat + embeddings)
+#                  ▲
+#   indexer ───────┘                      (construye el índice al arrancar y termina)
+#   evaluator ─────┘                      (solo para evaluar; no arranca con "up"; escribe su reporte
+#                                          en eval-result.json, sin servidor de seguimiento)
+#   seaweedfs ─────────────────────────── (solo para versionar knowledge/ con DVC; perfil "dvc",
+#                                          tampoco arranca con "up". Ver app/dvc-setup.sh)
+#
+# Qué se ve desde fuera: SOLO el gateway (y seaweedfs, si lo levantás a mano para hacer dvc push/pull).
+# Ollama escucha siempre en 127.0.0.1; no tiene autenticación propia y nunca debe exponerse.
+#
+# Se ejecuta desde esta carpeta (app/). Configuración del bot: config.env, en la raíz del repositorio
+# (cada servicio lo recibe con env_file).
+# Puertos, prefijo de los contenedores y topes de memoria: los valores están AQUÍ, tras ":-" (por
+# ejemplo ${GATEWAY_PORT:-8000}). Los topes de memoria deben sumar menos que la RAM de la máquina,
+# dejando ~1 GB para el sistema: con 8 GB, 6 + 1 = 7. Si Ollama se pasa de su tope, muere él y no
+# el resto.
+
+# Nombre del proyecto: de él salen los nombres de los contenedores y la red.
+# Los volúmenes NO dependen de él (tienen nombre propio, abajo), así que cambiarlo no pierde datos.
+name: verity
+
+# Versiones de las imágenes base: se fijan AQUÍ, en un solo sitio. Antes de cambiar una, comprueba
+# que existe. Cambiar PYTHON_VERSION obliga a ejecutar "make lock". (Los paquetes de Python se
+# declaran en pyproject.toml, no aquí.)
+x-python: &python
+  PYTHON_VERSION: "3.11"
+  UV_VERSION: 0.12.17
+
+services:
+  # ── Modelos de lenguaje ────────────────────────────────────────────────────
+  ollama:
+    image: ${IMAGE_PREFIX:-verity}-ollama:${IMAGE_TAG:-local}
+    build:
+      context: ./docker/ollama
+      args:
+        OLLAMA_VERSION: 0.34.2
+    container_name: ${CONTAINER_PREFIX:-verity}-ollama
+    restart: unless-stopped
+    mem_limit: ${OLLAMA_MEM_LIMIT:-6g}   # tope: que no ahogue al gateway
+    env_file:
+      - ../config.env
+    ports:
+      - "127.0.0.1:${OLLAMA_PORT:-11434}:11434"   # solo el propio servidor
+    volumes:
+      - ollama_data:/root/.ollama   # los modelos persisten entre reinicios
+    healthcheck:
+      # Healthy solo cuando TODOS los modelos de la lista ya están descargados
+      test: ["CMD-SHELL", "for m in $$(echo \"$$MODELS\" | tr ',' ' '); do ollama list | grep -q \"$${m%%:*}\" || exit 1; done"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  # ── Índice de vectores ─────────────────────────────────────────────────────
+  # Trabajo de un solo uso: trocea knowledge/ (que va dentro de la imagen), calcula los vectores con
+  # el mismo Ollama que después responde y termina. Así el índice siempre coincide con los documentos
+  # y con el modelo. Es la misma imagen del gateway.
+  indexer:
+    image: ${IMAGE_PREFIX:-verity}-gateway:${IMAGE_TAG:-local}
+    container_name: ${CONTAINER_PREFIX:-verity}-indexer
+    command: ["python", "-m", "rag.build_index"]
+    env_file:
+      - ../config.env
+    environment:
+      OLLAMA_URL: http://ollama:11434
+    volumes:
+      - index_data:/srv/artifacts/index
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: "no"
+
+  # ── API del bot ────────────────────────────────────────────────────────────
+  gateway:
+    image: ${IMAGE_PREFIX:-verity}-gateway:${IMAGE_TAG:-local}
+    build:
+      context: .
+      dockerfile: docker/gateway/Dockerfile
+      args: *python
+    container_name: ${CONTAINER_PREFIX:-verity}-gateway
+    restart: unless-stopped
+    mem_limit: ${GATEWAY_MEM_LIMIT:-1g}
+    env_file:
+      - ../config.env
+    environment:
+      OLLAMA_URL: http://ollama:11434   # nombre del servicio en la red de compose
+      APP_VERSION: ${IMAGE_TAG:-local}   # se devuelve como "release" en cada respuesta
+      # Secretos: los exportás vos en tu shell antes de levantar el stack. Sin API_KEYS el gateway se
+      # niega a arrancar, salvo AUTH_DISABLED=true (SOLO para probar; app/run/run.sh la usa).
+      API_KEYS: ${API_KEYS:-}
+      ORIGIN_VERIFY_SECRET: ${ORIGIN_VERIFY_SECRET:-}
+      AUTH_DISABLED: ${AUTH_DISABLED:-false}
+    ports:
+      - "${GATEWAY_PORT:-8000}:8000"   # lo único publicado hacia fuera
+    volumes:
+      - index_data:/srv/artifacts/index:ro
+    depends_on:
+      indexer:
+        condition: service_completed_successfully   # no atiende hasta que el índice esté hecho
+
+  # ── Herramientas de línea de comandos (evaluación) ─────────────────────────
+  # No arranca con "up": lo lanza app/run/run.sh, a mano. Monta el repositorio. Escribe su reporte
+  # en eval-result.json (ver app/eval/run_eval.py): no hay servidor de seguimiento, el historial se
+  # arma con esos archivos.
+  evaluator:
+    image: ${IMAGE_PREFIX:-verity}-evaluator:${IMAGE_TAG:-local}
+    build:
+      context: .
+      dockerfile: docker/evaluator/Dockerfile
+      args: *python
+    profiles: ["evaluator"]
+    env_file:
+      - ../config.env
+    environment:
+      GATEWAY_URL: http://gateway:8000
+      OLLAMA_URL: http://ollama:11434
+      # Las mismas claves con las que se arrancó el gateway (las del examen son efímeras)
+      API_KEYS: ${API_KEYS:-}
+      ORIGIN_VERIFY_SECRET: ${ORIGIN_VERIFY_SECRET:-}
+      # Commit con el que se corre el examen: se calcula fuera (acá solo está montado app/, no el
+      # repo completo). Las pone app/run/run.sh; ver git_info() en run_eval.py.
+      GIT_COMMIT: ${GIT_COMMIT:-}
+      GIT_DIRTY: ${GIT_DIRTY:-}
+    volumes:
+      - .:/work
+    depends_on:
+      gateway:
+        condition: service_started   # arrastra también a ollama
+
+  # ── Almacén S3 para DVC (versionado de knowledge/) ─────────────────────────
+  # SeaweedFS, no MinIO ni Garage: imagen oficial única (sin mirrors de terceros, sin login —
+  # MinIO borró su repo de Docker Hub en 2025 y restringió Quay), y trae de fábrica una interfaz
+  # web para mirar los archivos (el filer, puerto 8888), además de la API S3. No hace falta para
+  # correr el bot (knowledge/ ya va dentro de la imagen) — solo para "make dvc-push/pull".
+  # Credenciales S3: las genera y configura app/dvc-setup.sh (nunca se commitean).
+  seaweedfs:
+    image: chrislusf/seaweedfs:4.48
+    container_name: ${CONTAINER_PREFIX:-verity}-seaweedfs
+    profiles: ["dvc"]
+    restart: unless-stopped
+    command: >
+      server -dir=/data -s3 -s3.port=8333 -ip.bind=0.0.0.0 -master.volumeSizeLimitMB=1024
+    volumes:
+      - seaweedfs_data:/data
+    ports:
+      - "127.0.0.1:${SEAWEEDFS_S3_PORT:-8333}:8333"   # API S3 (lo que usa DVC)
+      - "127.0.0.1:${SEAWEEDFS_UI_PORT:-8888}:8888"   # interfaz web del filer (solo para mirar; no pensada para producción)
+
+# Con nombre explícito: no cambian aunque cambie el nombre del proyecto o de la carpeta.
+volumes:
+  ollama_data:   # modelos descargados
+    name: verity_ollama_data
+  index_data:    # el índice de vectores que genera el indexer
+    name: verity_index_data
+  seaweedfs_data:   # los documentos versionados que guarda SeaweedFS
+    name: verity_seaweedfs_data
