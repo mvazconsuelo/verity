@@ -1,7 +1,52 @@
 # Lab 01 — RAG
 
-**Aprendés:** troceo por secciones, embeddings, búsqueda por similitud, y por qué existe un umbral
-de confianza antes de responder.
+**Aprendés:** qué es RAG en realidad y por qué existe, qué es un chunk y un vector de embedding,
+troceo por secciones, búsqueda por similitud, y por qué existe un umbral de confianza antes de
+responder.
+
+## ¿Qué es RAG, en realidad?
+
+Un LLM a secas solo sabe lo que vio durante su entrenamiento — no tiene ni idea de qué dice *tu*
+política de envíos, porque ese texto nunca formó parte de su entrenamiento. Podrías intentar pegar
+toda tu base de conocimiento en cada prompt, pero eso no escala: hay un límite de cuánto texto puede
+procesar un modelo de una vez, cuesta más cuanto más mandás, y cuanto más texto irrelevante incluís,
+peor y más lenta tiende a ser la respuesta.
+
+**R**etrieval-**A**ugmented **G**eneration (generación aumentada por recuperación) separa el problema
+en dos pasos en vez de uno:
+
+1. **Retrieval (recuperación)**: antes de preguntarle nada al modelo, buscar en tus propios
+   documentos las pocas piezas que son realmente relevantes para esta pregunta puntual.
+2. **Generation (generación)**: darle al modelo *solo* esas piezas relevantes, como contexto, junto
+   con la pregunta.
+
+El modelo nunca "sabe" tus documentos de antemano — en cada pedido, le volvés a contar la parte
+relevante, de cero. Por eso también es posible responder honestamente "no tengo esa información": si
+la recuperación no encuentra nada con suficiente confianza, no hay contexto del cual inventar una
+respuesta en primer lugar (ver [el umbral de confianza](#el-umbral-de-confianza) más abajo).
+
+### ¿Por qué trocear documentos, para empezar?
+
+No podés preguntar útilmente "¿esto es relevante para la pregunta?" sobre un documento entero de una
+— un documento largo puede tener un párrafo relevante y muchos que no lo son, y comparar todo el
+bloque junto diluiría ese único buen match en ruido. Por eso los documentos se cortan en pedazos más
+chicos — **chunks** — lo bastante chicos como para que cada uno hable de más o menos *un solo* tema,
+así una búsqueda puede distinguir "esta parte es relevante" de "esta parte no lo es" con precisión
+real.
+
+### ¿Qué hay realmente adentro de un vector?
+
+Un **modelo de embeddings** (`bge-m3` acá) lee un pedazo de texto y devuelve una lista de números de
+largo fijo — en este proyecto, 1024 de ellos. Esa lista es el **vector** (o "embedding"). No es
+arbitraria: el modelo se entrenó para que textos con *significado* parecido terminen con vectores que
+quedan cerca entre sí en ese espacio de 1024 dimensiones, y textos con significado distinto terminen
+lejos — sin importar las palabras exactas que se usaron. "¿Cuánto tarda el envío?" y "¿cuándo llega mi
+pedido?" quedan cerca aunque casi no comparten palabras.
+
+"Cerca" se mide con **similitud coseno**: un número (0 a 1, para estos vectores normalizados) que
+dice qué tan alineados están dos vectores — 1 significa prácticamente el mismo significado, 0
+significa sin relación. Ese es el `score` que vas a ver más abajo, y el número contra el que se
+compara `MIN_SIMILARITY`.
 
 ## El documento de ejemplo
 

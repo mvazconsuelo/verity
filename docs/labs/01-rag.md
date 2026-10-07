@@ -1,7 +1,47 @@
 # Lab 01 — RAG
 
-**You learn:** section-based chunking, embeddings, similarity search, and why there's a confidence
-threshold before answering.
+**You learn:** what RAG actually is and why it exists, what a chunk and an embedding vector are,
+section-based chunking, similarity search, and why there's a confidence threshold before answering.
+
+## What is RAG, actually?
+
+A plain LLM only knows what it saw during training — it has no idea what *your* shipping policy
+says, because that text was never part of its training data. You could try pasting your entire
+knowledge base into every prompt, but that doesn't scale: there's a limit to how much text a model
+can take at once, it costs more the more you send, and the more irrelevant text you include, the
+worse and slower the answer tends to get.
+
+**R**etrieval-**A**ugmented **G**eneration splits the problem into two separate steps instead of one:
+
+1. **Retrieval**: before asking the model anything, search your own documents for the few pieces
+   that are actually relevant to this specific question.
+2. **Generation**: hand the model *only* those relevant pieces, as context, along with the question.
+
+The model never "knows" your documents ahead of time — every single request, you re-tell it the
+relevant part, fresh. That's also why it's possible to answer honestly with "I don't have that
+information": if retrieval doesn't find anything confident enough, there's no context to make up an
+answer from in the first place (see [the confidence threshold](#the-confidence-threshold) below).
+
+### Why split documents into chunks at all?
+
+You can't usefully ask "is this relevant to the question?" about an entire document at once — a long
+document might have one relevant paragraph and many irrelevant ones, and comparing the whole thing
+as a single block would blur that one good match into noise. So documents get cut into smaller
+pieces — **chunks** — small enough that each one is about roughly *one* thing, so a search can tell
+"this piece is relevant" from "this piece isn't" with real precision.
+
+### What's actually inside a vector?
+
+An **embedding model** (`bge-m3` here) reads a piece of text and outputs a fixed-length list of
+numbers — in this project, 1024 of them. That list is the **vector** (or "embedding"). It isn't
+arbitrary: the model was trained so that texts with similar *meaning* end up with vectors that sit
+close together in that 1024-dimensional space, and texts with different meaning end up far apart —
+regardless of the exact words used. "How long does shipping take?" and "when will my order arrive?"
+land close together even though they share almost no words in common.
+
+"Close together" gets measured with **cosine similarity**: a number (0 to 1, for these normalized
+vectors) that says how aligned two vectors are — 1 means essentially the same meaning, 0 means
+unrelated. That's the `score` you'll see below, and the number `MIN_SIMILARITY` gets compared against.
 
 ## The example document
 

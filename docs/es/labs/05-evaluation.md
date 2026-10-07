@@ -1,9 +1,31 @@
 # Lab 05 — Evaluación
 
-**Aprendés:** cómo se mide objetivamente si el bot responde bien, qué es una puerta de calidad, y
-por qué cada respuesta lleva un `prompt_hash` pegado.
+**Aprendés:** qué es realmente un "prompt" y un "golden set", cómo se mide objetivamente si el bot
+responde bien, qué es una puerta de calidad, y por qué cada respuesta lleva un `prompt_hash` pegado.
 
-## El golden set
+## ¿Qué es un "prompt", en realidad?
+
+El **prompt** es el texto literal que se le manda al modelo como instrucción — en este proyecto,
+[`system.md`](../../../app/prompts/system.md) (quién es el bot, qué puede y qué no puede hacer)
+combinado con [`template.md`](../../../app/prompts/template.md) (cómo se arman la pregunta y el
+contexto que trajo RAG en el mensaje final que ve el modelo). No hay ningún "código de
+comportamiento" aparte decidiendo el tono, los rechazos, o cómo se usan los chunks recuperados — todo
+eso sale de este texto. Cambiás la redacción y cambiás el comportamiento del bot, sin tocar código.
+Por eso vale la pena versionarlo y hashearlo (`prompt_hash`, más abajo) con el mismo cuidado que el
+código: en la práctica, *es* el comportamiento.
+
+## ¿Qué es un "golden set", y para qué evaluar?
+
+Un **golden set** es una lista fija de preguntas con respuestas esperadas conocidas, que sirve para
+medir calidad de la misma forma, siempre — la misma idea que una suite de tests en software normal,
+adaptada a un sistema que responde en texto libre en vez de devolver un valor fijo (no podés hacer
+`respuesta == "3 a 5 días"` sobre algo que un LLM redacta distinto cada vez — de ahí el match por
+`keywords`, no texto exacto, más abajo). Sin un golden set, "¿este cambio de prompt mejoró o
+empeoró al bot?" es solo una sensación. Con uno, es un número que podés comparar corrida contra
+corrida — y una puerta que puede frenar un cambio malo antes de que llegue a nadie (ver
+[la puerta de calidad](#la-puerta-de-calidad) más abajo).
+
+## `golden.jsonl`, línea por línea
 
 [`app/eval/golden.jsonl`](../../../app/eval/golden.jsonl), una pregunta por línea:
 

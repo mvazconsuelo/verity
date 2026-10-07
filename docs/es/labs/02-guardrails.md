@@ -1,7 +1,23 @@
 # Lab 02 — Guardrails
 
-**Aprendés:** cómo reconocer un saludo por significado (no por palabras) sin gastar una llamada
-extra al modelo, y dónde termina el trabajo de este módulo a propósito.
+**Aprendés:** qué es un "guardrail" y por qué los sistemas con LLM los necesitan, cómo reconocer un
+saludo por significado (no por palabras) sin gastar una llamada extra al modelo, y dónde termina el
+trabajo de este módulo a propósito.
+
+## ¿Qué es un "guardrail", en concepto?
+
+Los LLM son probabilísticos: preguntale lo mismo dos veces, con una redacción apenas distinta, y
+podés recibir dos respuestas diferentes — y nada le impide al modelo afirmar algo incorrecto con
+total confianza (lo que suele llamarse "alucinación"). Un **guardrail** es un pedacito de código
+*determinista*, nada de IA, que rodea al modelo — revisa lo que entra antes de que llegue a él, o lo
+que sale antes de que llegue al usuario — para hacer cumplir una regla que el modelo mismo no puede
+garantizar por su cuenta.
+
+La idea central: un guardrail no le pregunta al LLM "¿estás seguro?" — que el LLM sea poco confiable
+*es* justamente el problema del que se está cuidando. La decisión la toma con código común: un
+umbral, una comparación, una búsqueda — así la misma entrada siempre recibe la misma decisión, algo
+que un LLM solo no puede prometer. [El umbral de confianza del Lab 01](01-rag.md#el-umbral-de-confianza)
+ya es un guardrail; este lab cubre el otro que tiene el proyecto.
 
 ## El problema que resuelve
 

@@ -1,9 +1,31 @@
 # Lab 05 — Evaluation
 
-**You learn:** how to objectively measure whether the bot answers well, what a quality gate is, and
-why every answer carries a `prompt_hash` pinned to it.
+**You learn:** what a "prompt" and a "golden set" actually are, how to objectively measure whether
+the bot answers well, what a quality gate is, and why every answer carries a `prompt_hash` pinned
+to it.
 
-## The golden set
+## What's a "prompt", actually?
+
+The **prompt** is the literal text sent to the model as instructions — in this project,
+[`system.md`](../../app/prompts/system.md) (who the bot is, what it's allowed and not allowed to do)
+combined with [`template.md`](../../app/prompts/template.md) (how the question and the retrieved
+context from RAG get assembled into the final message the model sees). There's no separate "behavior
+code" deciding tone, refusals, or how retrieved chunks get used — all of that comes from this text.
+Change the wording and you change the bot's behavior, with zero code changes. That's exactly why it's
+worth versioning and hashing (`prompt_hash`, below) with the same care as code: it effectively *is*
+the behavior.
+
+## What's a "golden set", and why evaluate at all?
+
+A **golden set** is a fixed list of questions with known-correct expectations, used to measure
+quality the same way, every time — the same idea as a test suite in regular software, adapted to a
+system that answers in free-form text instead of returning a fixed value (you can't assert
+`answer == "3 to 5 days"` on something an LLM phrases differently each time — hence `keywords`
+matching, not exact text, below). Without a golden set, "did my prompt change make the bot better or
+worse?" is just a feeling. With one, it's a number you can compare run over run — and a gate that can
+block a bad change before it reaches anyone (see [the quality gate](#the-quality-gate) below).
+
+## `golden.jsonl`, line by line
 
 [`app/eval/golden.jsonl`](../../app/eval/golden.jsonl), one question per line:
 

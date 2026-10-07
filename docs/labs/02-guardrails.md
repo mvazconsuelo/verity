@@ -1,7 +1,23 @@
 # Lab 02 — Guardrails
 
-**You learn:** how to recognize a greeting by meaning (not by words) without spending an extra model
-call, and where this module's job intentionally stops.
+**You learn:** what a "guardrail" is and why LLM systems need them, how to recognize a greeting by
+meaning (not by words) without spending an extra model call, and where this module's job
+intentionally stops.
+
+## What is a "guardrail", conceptually?
+
+LLMs are probabilistic: ask the same question twice, phrased slightly differently, and you can get
+two different answers — and nothing stops a model from stating something wrong with total
+confidence (usually called "hallucination"). A **guardrail** is a small piece of *deterministic*,
+plain code that sits around the model — checking what goes in before it reaches the model, or what
+comes out before it reaches the user — to enforce a rule the model itself can't be trusted to
+enforce on its own.
+
+The key idea: a guardrail doesn't ask the LLM "are you sure about that?" — the LLM being unreliable
+*is* the problem it's guarding against. It makes the call with regular code instead: a threshold, a
+comparison, a lookup — so the same input always gets the same decision, which an LLM alone can't
+promise. [Lab 01's confidence threshold](01-rag.md#the-confidence-threshold) is one guardrail
+already; this lab covers the other one in this project.
 
 ## The problem it solves
 
