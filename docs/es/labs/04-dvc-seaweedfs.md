@@ -11,16 +11,10 @@ contra un storage aparte, sin inflar el repo" — útil el día que los document
 archivos `.md` chicos (PDFs, imágenes, un dataset de verdad). DVC separa esas dos cosas: git guarda
 un *puntero* (`knowledge.dvc`, un hash), y el contenido real vive en un *remoto* configurable.
 
-## Por qué SeaweedFS como remoto, y no MinIO
+## El remoto: SeaweedFS
 
-Se evaluaron tres opciones reales (no en teoría — cada una se probó con `docker manifest inspect` o
-levantándola de verdad):
-
-| Opción | Resultado |
-| --- | --- |
-| **MinIO** | Su imagen pública ya no se puede bajar sin login (Docker Hub borró el repo en 2025, Quay exige cuenta) |
-| **Garage** | Se baja sin login, pero no tiene interfaz web — solo API |
-| **SeaweedFS** | Se baja sin login **y** trae un navegador de archivos web de fábrica (puerto 8888) |
+Storage S3-compatible, self-hosted. Imagen oficial, sin login, trae un navegador de archivos web de
+fábrica (puerto 8888) — eso es todo, por eso está acá.
 
 ## El bootstrap
 

@@ -18,7 +18,7 @@ trendy. Where a more "obvious" alternative got ruled out, the reason is spelled 
 | Piece | What for | Why this one and not another |
 | --- | --- | --- |
 | **DVC** | Versions `app/knowledge/` beyond what git handles well | git versions text very well, but doesn't give you "push/pull a full snapshot against a separate storage, without bloating the repo" — useful once the documents stop being just 4 small `.md` files |
-| **SeaweedFS** | DVC's S3 remote, self-hosted | Single official image (no third-party mirrors, no login) and ships a web file browser out of the box. MinIO (lost public image distribution in 2025) and Garage (no web UI) were evaluated first — see [Lab 04](labs/04-dvc-seaweedfs.md) |
+| **SeaweedFS** | DVC's S3 remote, self-hosted | Official image, no login, ships a web file browser out of the box — see [Lab 04](labs/04-dvc-seaweedfs.md) |
 
 ## Platform
 

@@ -11,16 +11,10 @@ against a separate storage, without bloating the repo" — useful the day the do
 small `.md` files (PDFs, images, a real dataset). DVC separates those two things: git stores a
 *pointer* (`knowledge.dvc`, a hash), and the actual content lives in a configurable *remote*.
 
-## Why SeaweedFS as the remote, and not MinIO
+## The remote: SeaweedFS
 
-Three real options got evaluated (not in theory — each one tested with `docker manifest inspect` or
-by actually bringing it up):
-
-| Option | Result |
-| --- | --- |
-| **MinIO** | Its public image can no longer be pulled without login (Docker Hub deleted the repo in 2025, Quay requires an account) |
-| **Garage** | Pulls without login, but has no web UI — API only |
-| **SeaweedFS** | Pulls without login **and** ships a web file browser out of the box (port 8888) |
+Self-hosted, S3-compatible storage. Official image, no login required, ships a web file browser out
+of the box (port 8888) — that's it, that's why it's here.
 
 ## The bootstrap
 

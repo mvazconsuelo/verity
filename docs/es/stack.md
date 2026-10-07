@@ -18,7 +18,7 @@ moda. Donde se descartó una alternativa más "obvia", se explica por qué.
 | Pieza | Para qué | Por qué esta y no otra |
 | --- | --- | --- |
 | **DVC** | Versiona `app/knowledge/` más allá de git | git versiona bien texto, pero no te da "subir/bajar un snapshot completo" contra un storage aparte — útil si los documentos crecen o dejan de ser solo texto |
-| **SeaweedFS** | El remoto S3 de DVC, self-hosted | Imagen oficial única (sin mirrors de terceros, sin login) y trae interfaz web de archivos de fábrica. Se evaluaron MinIO (perdió la distribución pública de su imagen en 2025) y Garage (sin interfaz web) — ver [Lab 04](labs/04-dvc-seaweedfs.md) |
+| **SeaweedFS** | El remoto S3 de DVC, self-hosted | Imagen oficial, sin login, trae interfaz web de archivos de fábrica — ver [Lab 04](labs/04-dvc-seaweedfs.md) |
 
 ## Plataforma
 
