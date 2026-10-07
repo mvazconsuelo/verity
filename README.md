@@ -11,7 +11,7 @@
 ![Data](https://img.shields.io/badge/Data-DVC_%2B_SeaweedFS-0B0F14?style=for-the-badge&logo=dvc&logoColor=22D3EE&labelColor=0B0F14)
 ![Cloud](https://img.shields.io/badge/Cloud-none-0B0F14?style=for-the-badge&labelColor=0B0F14)
 
-**[Install](docs/install.md)** · **[Labs](#-labs)** · **[Break the Platform](docs/break.md)** · **[The stack](docs/stack.md)** · **[Architecture](docs/architecture.md)** · **[References](docs/references.md)** · **[Full documentation](docs/README.md)**
+**[Install](docs/install.md)** · **[Usage](docs/usage.md)** · **[Labs](#-labs)** · **[Break the Platform](docs/break.md)** · **[The stack](docs/stack.md)** · **[Architecture](docs/architecture.md)** · **[References](docs/references.md)** · **[Full documentation](docs/README.md)**
 
 **English** · [Español](README.es.md)
 
@@ -60,7 +60,7 @@ no deploy pipeline because there's no cloud to deploy to — `docker compose up`
 | 01 | [RAG](docs/labs/01-rag.md) | Section-based chunking, embeddings, the confidence threshold |
 | 02 | [Guardrails](docs/labs/02-guardrails.md) | Semantic routing (greeting vs. real question) without an extra model |
 | 03 | [Docker](docs/labs/03-docker.md) | Services, profiles, why `knowledge/` gets baked into the image |
-| 04 | [DVC + SeaweedFS](docs/labs/04-dvc-seaweedfs.md) | Versioning documents without AWS, with a web UI |
+| 04 | [DVC + SeaweedFS](docs/labs/04-dvc-seaweedfs.md) | Versioning documents with a self-hosted, web-UI storage — no cloud account needed |
 | 05 | [Evaluation](docs/labs/05-evaluation.md) | Golden set, quality gate, `prompt_hash` and `release` |
 | 06 | [GitHub Actions / CI](docs/labs/06-github-actions-ci.md) | What every PR checks, and why there's no deploy |
 

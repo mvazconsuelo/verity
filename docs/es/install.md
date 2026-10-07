@@ -41,6 +41,9 @@ curl -X POST http://localhost:8000/ask \
   -d '{"question": "¿cuánto tarda el envío estándar?"}'
 ```
 
+Referencia completa de la API (cada endpoint, cada error que te vas a encontrar de verdad) y cómo
+escribir documentos para `knowledge/` para que la búsqueda funcione de verdad: [Uso](usage.md).
+
 (Si no pusiste `API_KEYS` en tu entorno, `run.sh` ya corrió con `AUTH_DISABLED=true` — ver
 [Lab 02: Guardrails](labs/02-guardrails.md) para el detalle de por qué eso es seguro solo en local.)
 

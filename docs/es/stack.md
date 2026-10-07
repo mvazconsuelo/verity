@@ -9,7 +9,7 @@ moda. Donde se descartó una alternativa más "obvia", se explica por qué.
 | --- | --- | --- |
 | **FastAPI** | La API del bot (`gateway/`) | Async nativo (importa: cada `/ask` espera a Ollama), validación de entrada con Pydantic gratis |
 | **Ollama** | Sirve el modelo de chat y el de embeddings, local | Sin depender de una API externa de modelos — ni costo por token, ni tus documentos saliendo de tu máquina |
-| **qwen2.5:1.5b** | Modelo de chat | Chico a propósito: corre en CPU, sin GPU, en un Mac o una instancia chica. El trade-off es calidad — ver [Lab 05](labs/05-evaluation.md) sobre cómo se mide eso |
+| **qwen2.5:1.5b** | Modelo de chat | Chico a propósito: corre en CPU, sin GPU, en un Mac o Linux. El trade-off es calidad — ver [Lab 05](labs/05-evaluation.md) sobre cómo se mide eso |
 | **bge-m3** | Modelo de embeddings | Multilingüe, buen desempeño en MTEB para su tamaño, corre en el mismo Ollama que el chat (un solo servicio, no dos) |
 | **sqlite-vec** | Índice vectorial (`index.db`) | Un archivo, sin servidor aparte — para los pocos miles de chunks de un negocio chico, de sobra. Ver [Lab 01](labs/01-rag.md) |
 

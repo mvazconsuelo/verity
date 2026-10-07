@@ -41,6 +41,9 @@ curl -X POST http://localhost:8000/ask \
   -d '{"question": "how long does standard shipping take?"}'
 ```
 
+Full API reference (every endpoint, every error you'll actually hit) and how to write documents for
+`knowledge/` so search actually works: [Usage](usage.md).
+
 (If you didn't set `API_KEYS` in your environment, `run.sh` already ran with `AUTH_DISABLED=true` —
 see [Lab 02: Guardrails](labs/02-guardrails.md) for why that's safe only locally.)
 

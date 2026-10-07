@@ -11,7 +11,7 @@
 ![DVC](https://img.shields.io/badge/datos-DVC_%2B_SeaweedFS-0B0F14?style=for-the-badge&logo=dvc&logoColor=22D3EE&labelColor=0B0F14)
 ![Nube](https://img.shields.io/badge/nube-ninguna-0B0F14?style=for-the-badge&labelColor=0B0F14)
 
-**[Instalación](docs/es/install.md)** · **[Labs](#-labs)** · **[Break the Platform](docs/es/break.md)** · **[El stack](docs/es/stack.md)** · **[Arquitectura](docs/es/architecture.md)** · **[Referencias](docs/es/references.md)** · **[Toda la documentación](docs/es/README.md)**
+**[Instalación](docs/es/install.md)** · **[Uso](docs/es/usage.md)** · **[Labs](#-labs)** · **[Break the Platform](docs/es/break.md)** · **[El stack](docs/es/stack.md)** · **[Arquitectura](docs/es/architecture.md)** · **[Referencias](docs/es/references.md)** · **[Toda la documentación](docs/es/README.md)**
 
 [English](README.md) · **Español**
 
@@ -60,7 +60,7 @@ despliegue. Detalle caja por caja: [docs/es/architecture.md](docs/es/architectur
 | 01 | [RAG](docs/es/labs/01-rag.md) | Troceo por secciones, embeddings, el umbral de confianza |
 | 02 | [Guardrails](docs/es/labs/02-guardrails.md) | Enrutado semántico (saludo vs. pregunta real) sin modelo extra |
 | 03 | [Docker](docs/es/labs/03-docker.md) | Servicios, perfiles, por qué `knowledge/` se hornea en la imagen |
-| 04 | [DVC + SeaweedFS](docs/es/labs/04-dvc-seaweedfs.md) | Versionar documentos sin AWS, con interfaz web |
+| 04 | [DVC + SeaweedFS](docs/es/labs/04-dvc-seaweedfs.md) | Versionar documentos con un storage self-hosted, con interfaz web — sin cuenta de ningún proveedor |
 | 05 | [Evaluación](docs/es/labs/05-evaluation.md) | Golden set, puerta de calidad, `prompt_hash` y `release` |
 | 06 | [GitHub Actions / CI](docs/es/labs/06-github-actions-ci.md) | Qué valida cada PR, y por qué no hay despliegue |
 
