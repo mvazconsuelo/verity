@@ -57,3 +57,7 @@ host. Ver esto fallar en vivo: [Break the Platform #2](../break.md#2-cambi%C3%A9
 cd app && docker compose exec gateway ls /srv/knowledge
 # los mismos archivos que ya estaban en la imagen cuando se construyó — no los que tengas ahora en el disco
 ```
+
+---
+
+**[English](../../labs/03-docker.md)**

@@ -67,3 +67,7 @@ make local   # elegí "View the index" en el menú
 
 Te muestra, chunk por chunk, exactamente lo que el gateway tiene disponible para buscar — útil para
 depurar "¿por qué el bot no encontró esto?" sin adivinar.
+
+---
+
+**[English](../../labs/01-rag.md)**

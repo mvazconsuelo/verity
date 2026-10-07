@@ -35,3 +35,7 @@ este repo.
 
 - [pytest](https://docs.pytest.org/)
 - [Starlette TestClient](https://www.starlette.io/testclient/) — usado en `tests/test_gateway_auth.py`
+
+---
+
+**[English](../references.md)**

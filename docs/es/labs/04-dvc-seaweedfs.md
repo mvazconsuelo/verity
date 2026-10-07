@@ -79,3 +79,7 @@ Y mirá lo que quedó guardado, sin usar ningún comando de DVC, en
 
 `.dvc/config` (committeado) tiene la URL del remoto y la región. Las claves de acceso van en
 `.dvc/config.local` — DVC lo agrega a `.gitignore` solo, al correr `dvc remote modify --local`.
+
+---
+
+**[English](../../labs/04-dvc-seaweedfs.md)**

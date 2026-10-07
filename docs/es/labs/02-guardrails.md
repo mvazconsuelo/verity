@@ -53,3 +53,7 @@ patrón ya existe: `index_store.py`'s `phrases` table es genérica por `category
 `"greeting"` poblada, pero `save_phrases()`/`read_phrases()` no son específicas de saludos. Antes de
 construirlo: ¿hace falta de verdad, o alcanza con que RAG conteste "no tengo esa información" y un
 humano lo revise después? No agregues la categoría hasta tener esa respuesta.
+
+---
+
+**[English](../../labs/02-guardrails.md)**

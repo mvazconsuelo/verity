@@ -72,3 +72,7 @@ make local   # elegí "Examine" en el menú
 El reporte completo queda en `app/eval/report/eval-result.md` (legible) y `.json` (para leer por
 script). Mirá la tabla `<details>` con el detalle pregunta por pregunta — incluye si la recuperación
 trajo el documento correcto (✅/❌/➖), no solo si la respuesta final pasó.
+
+---
+
+**[English](../../labs/05-evaluation.md)**

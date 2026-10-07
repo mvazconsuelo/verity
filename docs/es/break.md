@@ -178,3 +178,7 @@ fijo y trivial en todos lados "para que ande", que es peor que no tener nada.
 
 ¿Encontraste una falla real que no está acá? Agregala con el mismo formato — es la forma más
 honesta de documentar un sistema: mostrando cómo se rompe, no solo cómo se supone que funciona.
+
+---
+
+**[English](../break.md)**

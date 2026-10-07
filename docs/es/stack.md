@@ -44,3 +44,7 @@ moda. Donde se descartó una alternativa más "obvia", se explica por qué.
   problema que no existe acá.
 - **Fine-tuning**: el modelo se usa tal cual viene; todo el comportamiento específico del negocio
   vive en los documentos (RAG) y el prompt, no en pesos reentrenados.
+
+---
+
+**[English](../stack.md)**

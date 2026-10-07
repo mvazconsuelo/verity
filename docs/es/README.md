@@ -28,3 +28,7 @@ tutoriales genéricos, son este repo.
 
 Todo el código citado existe en el repo tal cual se muestra — si algo no coincide con lo que ves en
 tu checkout, el código manda, no este documento.
+
+---
+
+**[English](../README.md)**

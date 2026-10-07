@@ -74,3 +74,7 @@ sin configurar nada aparte. Detalle completo: [Lab 04](labs/04-dvc-seaweedfs.md)
 - **El examen tarda mucho / falla con timeout**: la primera corrida descarga los modelos; corré
   `docker compose logs ollama` para ver el progreso.
 - Más escenarios reales, provocados a propósito: [Break the Platform](break.md).
+
+---
+
+**[English](../install.md)**

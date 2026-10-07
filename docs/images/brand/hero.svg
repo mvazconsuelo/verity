@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="100%" role="img" aria-label="Verity — customer support assistant that answers only from your documentation: write, chunk, embed, search, answer, evaluate, version, learn">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B0F14"/>
+      <stop offset="100%" stop-color="#0F1722"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#818CF8"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1C2630" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="320" fill="url(#bg)"/>
+  <rect width="1200" height="320" fill="url(#grid)" opacity="0.5"/>
+
+  <!-- subtle frame -->
+  <rect x="1" y="1" width="1198" height="318" fill="none" stroke="#1C2630" stroke-width="2"/>
+
+  <!-- icon: document + magnifying glass, left of the title -->
+  <g transform="translate(70,100)">
+    <rect x="0" y="0" width="86" height="110" rx="8" fill="#111827" stroke="#22D3EE" stroke-width="2.5"/>
+    <line x1="16" y1="28" x2="70" y2="28" stroke="#2DD4BF" stroke-width="4" stroke-linecap="round"/>
+    <line x1="16" y1="46" x2="70" y2="46" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+    <line x1="16" y1="64" x2="56" y2="64" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+    <line x1="16" y1="82" x2="60" y2="82" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="78" cy="96" r="22" fill="#0B0F14" stroke="#818CF8" stroke-width="5"/>
+    <line x1="94" y1="112" x2="112" y2="130" stroke="#818CF8" stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+  <!-- title -->
+  <text x="190" y="140" font-family="Helvetica Neue, Arial, sans-serif" font-size="72" font-weight="700" fill="url(#title)">Verity</text>
+  <text x="192" y="178" font-family="Helvetica Neue, Arial, sans-serif" font-size="21" fill="#9CA3AF">
+    Customer support assistant that answers only from your documentation
+  </text>
+  <text x="192" y="206" font-family="Helvetica Neue, Arial, sans-serif" font-size="16" fill="#64748B">
+    RAG, semantic guardrails, golden-set evaluation and data versioning — all local, no cloud
+  </text>
+
+  <!-- pipeline -->
+  <g font-family="Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600">
+    <!-- rail background -->
+    <rect x="70" y="248" width="1060" height="40" rx="20" fill="#0F1722" stroke="#1C2630"/>
+    <g fill="#CBD5E1">
+      <text x="110" y="273">write</text>
+      <text x="183" y="273" fill="#475569">→</text>
+      <text x="213" y="273">chunk</text>
+      <text x="294" y="273" fill="#475569">→</text>
+      <text x="324" y="273">embed</text>
+      <text x="410" y="273" fill="#475569">→</text>
+      <text x="440" y="273">search</text>
+      <text x="528" y="273" fill="#475569">→</text>
+      <text x="558" y="273">answer</text>
+      <text x="650" y="273" fill="#475569">→</text>
+      <text x="680" y="273">evaluate</text>
+      <text x="788" y="273" fill="#475569">→</text>
+      <text x="818" y="273">version</text>
+      <text x="912" y="273" fill="#475569">→</text>
+      <text x="942" y="273" fill="#22D3EE">learn</text>
+    </g>
+  </g>
+</svg>

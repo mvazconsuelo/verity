@@ -52,3 +52,7 @@ El patrón para decidirlo no cambia: ¿hay un entorno real al que desplegar? ¿q
 para qué? Si la respuesta es concreta, se construye entonces — contra ese caso real, no
 especulativamente. Ver [Break the Platform](../break.md) para el estilo de pensar "qué pasa si esto
 falla" antes de agregar una pieza nueva.
+
+---
+
+**[English](../../labs/06-github-actions-ci.md)**
