@@ -9,7 +9,6 @@
 ![Docker](https://img.shields.io/badge/Docker-Compose-0B0F14?style=for-the-badge&logo=docker&logoColor=22D3EE&labelColor=0B0F14)
 ![Ollama](https://img.shields.io/badge/Ollama-qwen2.5_%2B_bge--m3-0B0F14?style=for-the-badge&logo=ollama&logoColor=22D3EE&labelColor=0B0F14)
 ![Data](https://img.shields.io/badge/Data-DVC_%2B_SeaweedFS-0B0F14?style=for-the-badge&logo=dvc&logoColor=22D3EE&labelColor=0B0F14)
-![Cloud](https://img.shields.io/badge/Cloud-none-0B0F14?style=for-the-badge&labelColor=0B0F14)
 
 **[Install](docs/install.md)** · **[Usage](docs/usage.md)** · **[Labs](#-labs)** · **[Break the Platform](docs/break.md)** · **[The stack](docs/stack.md)** · **[Architecture](docs/architecture.md)** · **[References](docs/references.md)** · **[Full documentation](docs/README.md)**
 
