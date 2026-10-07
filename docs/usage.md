@@ -68,26 +68,25 @@ Needs `x-api-key`. The only endpoint that costs a model call (unless a guardrail
 see [Lab 02](labs/02-guardrails.md)).
 
 ```bash
-# the example documents (and the bot's answers) are in Spanish on purpose — see "What to put in
-# app/knowledge/" below. The question itself can be asked in whatever language you write your
-# documents and prompt in.
 curl -X POST http://localhost:8000/ask \
   -H "content-type: application/json" \
   -H "x-api-key: your-key" \
-  -d '{"question": "¿cuánto tarda el envío estándar?"}'   # "how long does standard shipping take?"
+  -d '{"question": "how long does standard shipping take?"}'
 ```
 ```json
 {
-  "answer": "El envío estándar tarda de 3 a 5 días hábiles.",
+  "answer": "Standard shipping takes 3 to 5 business days.",
   "model": "qwen2.5:1.5b",
   "tokens": 14,
   "release": "local",
   "prompt_hash": "a1b2c3d4",
   "temperature": 0,
-  "sources": ["envios.md#Plazos"]
+  "sources": ["shipping.md#Timelines"]
 }
 ```
-(`answer`: "Standard shipping takes 3 to 5 business days.")
+
+(This example uses English for clarity. The project's own real documents and answers are actually
+in Spanish, on purpose — ask in whatever language you write your own `knowledge/` documents in.)
 
 `sources` tells you exactly which document and section backed the answer (empty if the question got
 short-circuited by a guardrail — a greeting, or "I don't have that information"). `question` is
@@ -144,9 +143,51 @@ bot either can't find anything or returns noisy, unrelated chunks. Full mechanic
 6. **Rebuild after every change** — `knowledge/` is baked into the image at build time, not mounted
    live. See [Break the Platform #2](break.md#2-i-edited-a-document-and-the-bot-keeps-answering-the-old-one)
    if this bites you.
-7. **Write 2-3 golden-set questions per document as you go** (see [Lab 05](labs/05-evaluation.md)) —
-   it's much easier to write them while you remember what you just put in the document than to
-   reconstruct it later.
+7. **Write 2-3 golden-set questions per document as you go** — see the next section. It's much
+   easier while you remember what you just put in the document than to reconstruct it later.
+
+## Building your own golden set
+
+The concepts (what it's for, how the metrics and the quality gate work) are in
+[Lab 05](labs/05-evaluation.md) — this is the practical "how do I actually add one" version.
+
+1. **One file, one question per line:** [`app/eval/golden.jsonl`](../app/eval/golden.jsonl), JSONL
+   (not a JSON array — each line is its own complete JSON object).
+2. **The fields:**
+
+   | Field | What goes in it |
+   | --- | --- |
+   | `id` | Any unique string (`q01`, `q02`...) — only used to label the report |
+   | `question` | Exactly what a real user would type |
+   | `expected` | A human-readable reference answer — **not** checked by the code, it's there so a person reviewing the report can judge at a glance |
+   | `keywords` | What's actually checked (see below) |
+   | `source` | Which `.md` file should back the answer (checks retrieval, not just the final text) |
+   | `answerable` | `true` if a document really answers it, `false` if it's made up on purpose |
+
+3. **Pick `keywords`, not full sentences.** The model phrases things differently every time, so the
+   check is "does the answer contain all of these substrings" — pick short, specific facts
+   (numbers, exact costs, specific nouns), not grammatically complete answers. For "how long does
+   standard shipping take?", `["3 to 5"]` is enough — don't write `["takes 3 to 5 business days"]`
+   and expect the model's exact phrasing to match it.
+4. **Mix `answerable: true` and `answerable: false`.** Write 2-3 real, answerable questions per
+   document (checks `accuracy_answerable` and `retrieval_recall`) — **and** a handful of questions
+   with no answer in any document (checks `refusal_rate`: does the bot admit it doesn't know,
+   instead of making something up?). Both matter; a golden set with only answerable questions never
+   catches a bot that's started hallucinating.
+5. **A complete example, end to end:**
+   ```json
+   {"id": "q01", "question": "how long does standard shipping take?", "expected": "3 to 5 business days.", "keywords": ["3 to 5"], "source": "shipping.md", "answerable": true}
+   {"id": "q02", "question": "do you ship internationally?", "expected": "No, nationwide only.", "keywords": ["no", "nationwide"], "source": "shipping.md", "answerable": true}
+   {"id": "q03", "question": "can I pay in cryptocurrency?", "expected": "Not covered by any document.", "keywords": [], "source": null, "answerable": false}
+   ```
+6. **Run it:**
+   ```bash
+   make local   # pick "Examine" from the menu
+   # or, against a gateway that's already up:
+   docker compose run --rm evaluator python eval/run_eval.py
+   ```
+   Full report (pass/fail per question, the metrics, the quality gate) in
+   `app/eval/report/eval-result.md`.
 
 ---
 

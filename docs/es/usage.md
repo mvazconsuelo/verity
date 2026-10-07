@@ -142,9 +142,52 @@ el bot no encuentra nada, o devuelve chunks ruidosos sin relación. Mecánica co
 6. **Reconstruí después de cada cambio** — `knowledge/` se hornea en la imagen al construirla, no se
    monta en vivo. Ver [Break the Platform #2](break.md#2-cambi%C3%A9-un-documento-y-el-bot-sigue-respondiendo-lo-viejo)
    si esto te agarra desprevenido.
-7. **Escribí 2-3 preguntas del golden set por documento, a medida que avanzás** (ver
-   [Lab 05](labs/05-evaluation.md)) — es mucho más fácil escribirlas mientras te acordás qué
-   acabás de poner en el documento que reconstruirlo después.
+7. **Escribí 2-3 preguntas del golden set por documento, a medida que avanzás** — ver la próxima
+   sección. Es mucho más fácil mientras te acordás qué acabás de poner en el documento que
+   reconstruirlo después.
+
+## Armar tu propio golden set
+
+Los conceptos (para qué sirve, cómo funcionan las métricas y la puerta de calidad) están en el
+[Lab 05](labs/05-evaluation.md) — esto es la versión práctica de "cómo agrego uno, en concreto".
+
+1. **Un archivo, una pregunta por línea:** [`app/eval/golden.jsonl`](../../app/eval/golden.jsonl),
+   formato JSONL (no un array JSON — cada línea es su propio objeto JSON completo).
+2. **Los campos:**
+
+   | Campo | Qué va ahí |
+   | --- | --- |
+   | `id` | Cualquier string único (`q01`, `q02`...) — solo se usa para etiquetar el reporte |
+   | `question` | Exactamente lo que escribiría un usuario real |
+   | `expected` | Una respuesta de referencia legible — **no** la chequea el código, está para que una persona revisando el reporte juzgue de un vistazo |
+   | `keywords` | Lo que de verdad se chequea (ver abajo) |
+   | `source` | Qué archivo `.md` debería respaldar la respuesta (chequea la recuperación, no solo el texto final) |
+   | `answerable` | `true` si algún documento de verdad la responde, `false` si está inventada a propósito |
+
+3. **Elegí `keywords`, no oraciones completas.** El modelo redacta distinto cada vez, así que el
+   chequeo es "¿la respuesta contiene todos estos substrings?" — elegí datos cortos y específicos
+   (números, costos exactos, sustantivos puntuales), no una respuesta gramaticalmente completa. Para
+   "¿cuánto tarda el envío estándar?", con `["3 a 5"]` alcanza — no escribas
+   `["tarda de 3 a 5 días hábiles"]` esperando que la redacción exacta del modelo coincida.
+4. **Combiná `answerable: true` y `answerable: false`.** Escribí 2-3 preguntas reales y contestables
+   por documento (chequea `accuracy_answerable` y `retrieval_recall`) — **y** un puñado de preguntas
+   sin respuesta en ningún documento (chequea `refusal_rate`: ¿el bot admite que no sabe, en vez de
+   inventar algo?). Las dos importan; un golden set con solo preguntas contestables nunca detecta un
+   bot que empezó a alucinar.
+5. **Un ejemplo completo, de punta a punta:**
+   ```json
+   {"id": "q01", "question": "¿cuánto tarda el envío estándar?", "expected": "De 3 a 5 días hábiles.", "keywords": ["3 a 5"], "source": "envios.md", "answerable": true}
+   {"id": "q02", "question": "¿hacen envíos internacionales?", "expected": "No, solo territorio nacional.", "keywords": ["no", "nacional"], "source": "envios.md", "answerable": true}
+   {"id": "q03", "question": "¿puedo pagar con criptomonedas?", "expected": "No está cubierto por ningún documento.", "keywords": [], "source": null, "answerable": false}
+   ```
+6. **Correlo:**
+   ```bash
+   make local   # elegí "Examine" en el menú
+   # o, contra un gateway que ya está arriba:
+   docker compose run --rm evaluator python eval/run_eval.py
+   ```
+   Reporte completo (pasa/falla por pregunta, las métricas, la puerta de calidad) en
+   `app/eval/report/eval-result.md`.
 
 ---
 

@@ -27,12 +27,12 @@ block a bad change before it reaches anyone (see [the quality gate](#the-quality
 
 ## `golden.jsonl`, line by line
 
-[`app/eval/golden.jsonl`](../../app/eval/golden.jsonl), one question per line:
+[`app/eval/golden.jsonl`](../../app/eval/golden.jsonl), one question per line. The real file is in
+Spanish (matching the real documents — see [Lab 01](01-rag.md)); translated here for this guide:
 
 ```json
-{"id": "q01", "question": "¿Cuánto tarda el envío estándar?", "expected": "De 3 a 5 días hábiles.", "keywords": ["3 a 5"], "source": "envios.md", "answerable": true}
+{"id": "q01", "question": "How long does standard shipping take?", "expected": "3 to 5 business days.", "keywords": ["3 to 5"], "source": "shipping.md", "answerable": true}
 ```
-(`question`: "How long does standard shipping take?" · `expected`: "3 to 5 business days.")
 
 - `answerable: true` → passes if the answer contains **all** the `keywords` (not an exact text
   match — the model can phrase it differently, what matters is that the fact is in there).

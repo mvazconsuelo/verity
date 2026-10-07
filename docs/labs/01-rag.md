@@ -45,33 +45,34 @@ unrelated. That's the `score` you'll see below, and the number `MIN_SIMILARITY` 
 
 ## The example document
 
-[`app/knowledge/envios.md`](../../app/knowledge/envios.md):
+The project's real example lives at
+[`app/knowledge/envios.md`](../../app/knowledge/envios.md), in Spanish — the bot's own documents and
+answers stay in Spanish on purpose (see `prompts/system.md`). Translated here for this guide, same
+structure:
 
 ```markdown
-# Envíos
+# Shipping
 
-## Plazos
-El envío estándar tarda de 3 a 5 días hábiles. El envío express tarda de 24 a 48 horas.
+## Timelines
+Standard shipping takes 3 to 5 business days. Express shipping takes 24 to 48 hours.
 
-## Costos
-El envío estándar cuesta $4.99, gratis en pedidos desde $50...
+## Costs
+Standard shipping costs $4.99, free on orders over $50.
 
-## Cobertura
-Enviamos a todo el territorio nacional...
+## Coverage
+We ship nationwide only.
 ```
 
-In English: `# Shipping` / `## Timelines` (standard: 3-5 business days, express: 24-48h) /
-`## Costs` ($4.99 standard, free over $50) / `## Coverage` (national only).
-
-(The bot's own documents and answers stay in Spanish on purpose — see `prompts/system.md`. The
-mechanics below are language-agnostic.)
+The chunking mechanics below are language-agnostic — everything that follows applies identically
+whether your real documents are in English, Spanish, or anything else.
 
 ## How it gets chunked
 
 [`rag/loaders.py`](../../app/rag/loaders.py), function `chunk_md()`: splits the text on every
 `## ` (a `###` does NOT count as a split — it's a subheading inside the same section). The title
-(`# Envíos`) gets prepended to every chunk, so each one is understandable without the rest of the
-document. `envios.md` produces 3 chunks: one for `Plazos`, `Costos` and `Cobertura` each.
+(`# Shipping` / `# Envíos` in the real file) gets prepended to every chunk, so each one is
+understandable without the rest of the document. This document produces 3 chunks: one for
+`Timelines`, `Costs` and `Coverage` each (`Plazos`, `Costos`, `Cobertura` in the real Spanish file).
 
 If a section is longer than `CHUNK_MAX_CHARS` (1200 by default), it gets split into several with
 `CHUNK_OVERLAP_CHARS` (150) of overlap — so a sentence doesn't end up cut right at the boundary
