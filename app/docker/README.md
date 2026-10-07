@@ -1,14 +1,14 @@
-# Qué va acá (y qué no)
+# What goes here (and what doesn't)
 
-Esta carpeta tiene un Dockerfile por servicio, pero **solo para los que lo necesitan**: código
-propio (`gateway/`, `evaluator/`) o una imagen pública a la que hay que agregarle algo
-(`ollama/`, que le suma `entrypoint.sh` para descargar los modelos al arrancar).
+This folder has one Dockerfile per service, but **only for the ones that need it**: either their
+own code (`gateway/`, `evaluator/`) or a public image that needs something added to it (`ollama/`,
+which adds `entrypoint.sh` to download the models at startup).
 
-Un servicio que usa una imagen pública **sin ningún agregado propio** no tiene carpeta acá — se
-declara directo en `../docker-compose.yml` con `image: <imagen>:<versión fijada>`, sin Dockerfile de
-por medio. Hoy el único caso es **`seaweedfs`** (el almacén S3 de DVC): mirá su definición en el
-compose, no busques `docker/seaweedfs/`.
+A service that uses a public image **with nothing added of its own** doesn't get a folder here —
+it's declared directly in `../docker-compose.yml` with `image: <image>:<pinned-version>`, no
+Dockerfile in between. Today the only case is **`seaweedfs`** (DVC's S3 storage): check its
+definition in the compose file, don't look for `docker/seaweedfs/`.
 
-Si en algún momento `seaweedfs` (o cualquier otro) necesita algo propio (un script de arranque, un
-archivo de configuración horneado en la imagen), ahí sí pasa a tener su carpeta acá, igual que
+If `seaweedfs` (or any other service) ever needs something of its own (a startup script, a
+configuration file baked into the image), that's when it gets its own folder here, same as
 `ollama`.

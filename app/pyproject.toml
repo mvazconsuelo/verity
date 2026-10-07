@@ -1,15 +1,16 @@
-# ÚNICO lugar donde se declaran las dependencias de Python del proyecto.
-# Tras editarlo, regenera uv.lock (el CI comprueba que corresponda; ver README): fija TODAS las versiones (también las
-# transitivas). Cada imagen instala solo su grupo. No hace falta fijar NumPy a mano: el lock
-# elige la versión compatible con el Python de cada imagen.
+# THE ONLY place where the project's Python dependencies are declared.
+# After editing it, regenerate uv.lock (CI checks it matches; see README): it pins ALL versions
+# (transitive ones too). Each image installs only its group. No need to pin NumPy by hand: the
+# lock picks the version compatible with each image's Python.
 
 [project]
 name = "verity"
 version = "0.1.0"
 requires-python = ">=3.11"
 
-# Imagen "gateway": la API del bot. La usan también el indexer (rag/build_index.py, escribe el
-# índice) y el propio gateway (rag/index_store.py vía gateway/main.py, lo busca): comparten imagen.
+# "gateway" image: the bot's API. Also used by the indexer (rag/build_index.py, writes the
+# index) and the gateway itself (rag/index_store.py via gateway/main.py, reads it): they share
+# the image.
 dependencies = [
     "fastapi>=0.141.1",
     "httpx>=0.28.1",
@@ -19,16 +20,16 @@ dependencies = [
 ]
 
 [dependency-groups]
-# Pruebas del gateway (se ejecutan en el CI con: uv run --group test pytest)
+# Gateway tests (run in CI with: uv run --group test pytest)
 test = [
     "pytest>=8",
 ]
-# Imagen "evaluator": corre el examen (app/eval/run_eval.py), que solo usa la librería estándar de
-# Python y rag/loaders.py (tampoco tiene dependencias externas) — por ahora no necesita nada acá.
-# Se deja el grupo definido (vacío) porque el Dockerfile hace "uv sync --only-group evaluator".
+# "evaluator" image: runs the exam (app/eval/run_eval.py), which only uses Python's standard
+# library and rag/loaders.py (no external dependencies either) — doesn't need anything here for
+# now. The group is left defined (empty) because the Dockerfile runs "uv sync --only-group evaluator".
 evaluator = []
-# Herramienta de desarrollo (nunca va en ninguna imagen): versiona knowledge/ contra SeaweedFS.
-# Uso: uv run --group dvc dvc <comando> (ver app/dvc-setup.sh y Makefile).
+# Dev tool (never goes into any image): versions knowledge/ against SeaweedFS.
+# Usage: uv run --group dvc dvc <command> (see app/dvc-setup.sh and Makefile).
 dvc = [
     "dvc[s3]>=3.55",
 ]

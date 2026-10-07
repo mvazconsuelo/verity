@@ -1,21 +1,21 @@
 #!/bin/sh
 set -e
 
-# Arranca el servidor en segundo plano
+# Starts the server in the background
 ollama serve &
 server_pid=$!
 
-# Espera a que la API responda
+# Waits for the API to respond
 until ollama list >/dev/null 2>&1; do
   sleep 1
 done
 
-# Descarga cada modelo de la lista (separados por comas) si aún no está en el volumen
-for modelo in $(echo "${MODELS}" | tr ',' ' '); do
-  echo "Descargando modelo: ${modelo}"
-  ollama pull "${modelo}"
+# Downloads each model in the list (comma-separated) if it's not already in the volume
+for model in $(echo "${MODELS}" | tr ',' ' '); do
+  echo "Downloading model: ${model}"
+  ollama pull "${model}"
 done
-echo "Modelos listos: ${MODELS}"
+echo "Models ready: ${MODELS}"
 
-# Mantiene el contenedor vivo mientras corra el servidor
+# Keeps the container alive while the server runs
 wait "$server_pid"

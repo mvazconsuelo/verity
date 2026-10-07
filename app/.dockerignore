@@ -1,5 +1,5 @@
-# Los builds que usan la raíz del repo como contexto (gateway, evaluator) solo necesitan esto.
-# Todo lo demás (índice, .git, evaluación, env...) no va en la imagen.
+# Builds that use the repo root as context (gateway, evaluator) only need this.
+# Everything else (index, .git, evaluation, env...) doesn't go into the image.
 *
 !pyproject.toml
 !uv.lock
