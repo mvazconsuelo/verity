@@ -25,7 +25,6 @@ these aren't generic tutorials, they're this repo.
 | 03 | [Docker](labs/03-docker.md) | Services, profiles, why `knowledge/` gets baked into the image |
 | 04 | [DVC + SeaweedFS](labs/04-dvc-seaweedfs.md) | Versioning documents with a self-hosted S3 remote that runs right next to it |
 | 05 | [Evaluation](labs/05-evaluation.md) | The golden set, the quality gate, `prompt_hash` and `release` |
-| 06 | [GitHub Actions / CI](labs/06-github-actions-ci.md) | What every PR checks, and why there's no deploy pipeline |
 
 All the code referenced exists in the repo exactly as shown — if anything doesn't match what you see
 in your checkout, the code is the source of truth, not this document.

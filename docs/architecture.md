@@ -25,9 +25,6 @@
   invoked by hand, against a gateway that's already up.
 - **`DVC` + `SeaweedFS`**: `"dvc"` profile, also doesn't start with `up`. Solves a different problem
   (versioning the source documents) that has nothing to do with answering questions.
-- **`GitHub Actions`**: doesn't even run on your machine — and **never reaches the runtime**. There's
-  no arrow from CI to any container in the diagram, on purpose: see
-  [Lab 06](labs/06-github-actions-ci.md) for why.
 
 ## Why the index is read-only from the gateway
 

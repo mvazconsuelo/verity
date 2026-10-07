@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 540" width="100%" role="img" aria-label="Verity architecture: top row is checks that run separately from the bot (evaluator, GitHub Actions CI) with no connection below; middle row is the live request path, user to gateway to ollama; lower row builds the index from knowledge/ into a read-only store the gateway queries; bottom row is DVC with SeaweedFS versioning the documents, outside the request path">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 540" width="100%" role="img" aria-label="Verity architecture: top row is the evaluator, a check that runs separately from the bot with no connection below; middle row is the live request path, user to gateway to ollama; lower row builds the index from knowledge/ into a read-only store the gateway queries; bottom row is DVC with SeaweedFS versioning the documents, outside the request path">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#22D3EE"/>
@@ -10,18 +10,12 @@
 
   <rect width="1040" height="540" fill="#0B0F14"/>
 
-  <!-- ══ top row: checks that run separately, never touch the runtime below ══ -->
-  <rect x="30" y="24" width="300" height="100" rx="10" fill="#0F1722" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
-  <text x="180" y="50" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="17" font-weight="700" fill="#CBD5E1">Evaluator</text>
-  <text x="180" y="70" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#94A3B8">golden set, run by hand</text>
-  <text x="180" y="90" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#64748B">calls POST /ask like any client</text>
-  <text x="180" y="108" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#64748B">nothing wires it in automatically</text>
-
-  <rect x="710" y="24" width="300" height="100" rx="10" fill="#0F1722" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
-  <text x="860" y="50" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="17" font-weight="700" fill="#CBD5E1">GitHub Actions (CI)</text>
-  <text x="860" y="70" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#94A3B8">ci.yml — runs on every PR, code only</text>
-  <text x="860" y="90" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#64748B">checks: lint · tests · Docker · secrets</text>
-  <text x="860" y="108" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#64748B">no arrow below — it never runs the bot</text>
+  <!-- ══ top row: a check that runs separately, never touches the runtime below ══ -->
+  <rect x="370" y="24" width="300" height="100" rx="10" fill="#0F1722" stroke="#475569" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="520" y="50" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="17" font-weight="700" fill="#CBD5E1">Evaluator</text>
+  <text x="520" y="70" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="12" fill="#94A3B8">golden set, run by hand</text>
+  <text x="520" y="90" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#64748B">calls POST /ask like any client</text>
+  <text x="520" y="108" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11" fill="#64748B">nothing wires it in automatically</text>
 
   <!-- ══ middle row: the live request path ══ -->
   <rect x="190" y="175" width="140" height="56" rx="10" fill="#111827" stroke="#334155" stroke-width="2"/>

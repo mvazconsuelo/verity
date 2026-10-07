@@ -25,7 +25,6 @@ moda. Donde se descartó una alternativa más "obvia", se explica por qué.
 | Pieza | Para qué | Por qué esta y no otra |
 | --- | --- | --- |
 | **Docker Compose** | Orquesta todo el stack en una sola máquina | No hay Kubernetes que justificar: todo corre en un solo nodo, el tuyo. Ver [Lab 03](labs/03-docker.md) |
-| **GitHub Actions** | CI — valida cada PR | Solo lint + pytest, nada de despliegue: no hay a dónde desplegar desde la nube. Ver [Lab 06](labs/06-github-actions-ci.md) |
 
 ## Seguridad
 

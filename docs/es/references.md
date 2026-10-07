@@ -18,18 +18,10 @@ este repo.
 - [DVC — remotos S3-compatibles](https://dvc.org/doc/user-guide/data-management/remote-storage/amazon-s3)
 - [SeaweedFS — wiki](https://github.com/seaweedfs/seaweedfs/wiki)
 
-## Plataforma y CI
+## Plataforma
 
 - [Docker Compose — referencia](https://docs.docker.com/reference/compose-file/)
-- [GitHub Actions — documentación](https://docs.github.com/actions)
 - [uv](https://docs.astral.sh/uv/) — el gestor de paquetes/entornos de Python que usa el proyecto
-
-## Las herramientas que validan el propio CI
-
-- [shellcheck](https://www.shellcheck.net/) — lint de scripts bash
-- [hadolint](https://github.com/hadolint/hadolint) — lint de Dockerfiles
-- [actionlint](https://github.com/rhysd/actionlint) — lint de workflows de GitHub Actions
-- [gitleaks](https://github.com/gitleaks/gitleaks) — detección de secretos en el historial de git
 
 ## Testing
 

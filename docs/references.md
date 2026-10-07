@@ -18,18 +18,10 @@ explains.
 - [DVC — S3-compatible remotes](https://dvc.org/doc/user-guide/data-management/remote-storage/amazon-s3)
 - [SeaweedFS — wiki](https://github.com/seaweedfs/seaweedfs/wiki)
 
-## Platform and CI
+## Platform
 
 - [Docker Compose — reference](https://docs.docker.com/reference/compose-file/)
-- [GitHub Actions — documentation](https://docs.github.com/actions)
 - [uv](https://docs.astral.sh/uv/) — the Python package/environment manager the project uses
-
-## The tools that validate the CI itself
-
-- [shellcheck](https://www.shellcheck.net/) — bash script linting
-- [hadolint](https://github.com/hadolint/hadolint) — Dockerfile linting
-- [actionlint](https://github.com/rhysd/actionlint) — GitHub Actions workflow linting
-- [gitleaks](https://github.com/gitleaks/gitleaks) — secret detection across git history
 
 ## Testing
 

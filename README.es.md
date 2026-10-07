@@ -4,7 +4,6 @@
 
 <br>
 
-![CI](https://img.shields.io/badge/ci-GitHub_Actions-0B0F14?style=for-the-badge&logo=githubactions&logoColor=22D3EE&labelColor=0B0F14)
 ![Python](https://img.shields.io/badge/python-3.11-0B0F14?style=for-the-badge&logo=python&logoColor=22D3EE&labelColor=0B0F14)
 ![Docker](https://img.shields.io/badge/docker-compose-0B0F14?style=for-the-badge&logo=docker&logoColor=22D3EE&labelColor=0B0F14)
 ![Ollama](https://img.shields.io/badge/ollama-qwen2.5_%2B_bge--m3-0B0F14?style=for-the-badge&logo=ollama&logoColor=22D3EE&labelColor=0B0F14)
@@ -37,20 +36,16 @@ máquina, sin nube, sin tarjeta de crédito, sin cuentas que crear.**
 <img alt="DVC" src="https://img.shields.io/badge/DVC-13ADC7?style=for-the-badge&logo=dvc&logoColor=white">&nbsp;<img alt="SeaweedFS" src="https://img.shields.io/badge/SeaweedFS-2E8B57?style=for-the-badge">
 
 **Plataforma**<br>
-<img alt="Docker" src="https://img.shields.io/badge/Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white">&nbsp;<img alt="GitHub Actions" src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white">&nbsp;<img alt="uv" src="https://img.shields.io/badge/uv-DE5FE9?style=for-the-badge">
-
-**Calidad**<br>
-<img alt="pytest" src="https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white">&nbsp;<img alt="shellcheck" src="https://img.shields.io/badge/shellcheck-121011?style=for-the-badge">&nbsp;<img alt="hadolint" src="https://img.shields.io/badge/hadolint-384D54?style=for-the-badge">&nbsp;<img alt="actionlint" src="https://img.shields.io/badge/actionlint-2088FF?style=for-the-badge">&nbsp;<img alt="gitleaks" src="https://img.shields.io/badge/gitleaks-FF4136?style=for-the-badge">
+<img alt="Docker" src="https://img.shields.io/badge/Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white">&nbsp;<img alt="uv" src="https://img.shields.io/badge/uv-DE5FE9?style=for-the-badge">
 
 Por qué cada una y no otra: [docs/es/stack.md](docs/es/stack.md).
 
 ## 🏗 Arquitectura
 
-![Arquitectura de Verity: usuario, gateway, Ollama, indexer, índice, evaluador manual, DVC con SeaweedFS, y GitHub Actions aislado sin tocar el runtime](docs/images/architecture.es.svg)
+![Arquitectura de Verity: usuario, gateway, Ollama, indexer, índice, evaluador manual, y DVC con SeaweedFS versionando los documentos fuera del camino de las peticiones](docs/images/architecture.es.svg)
 
-GitHub Actions **nunca** toca el runtime: valida código en cada PR y listo. No hay pipeline de
-despliegue porque no hay nube a la que desplegar — `docker compose up`, en tu máquina, **es** el
-despliegue. Detalle caja por caja: [docs/es/architecture.md](docs/es/architecture.md).
+No hay pipeline de despliegue, porque no hay nube a la que desplegar — `docker compose up`, en tu
+máquina, **es** el despliegue. Detalle caja por caja: [docs/es/architecture.md](docs/es/architecture.md).
 
 ## 🧪 Labs
 
@@ -61,7 +56,6 @@ despliegue. Detalle caja por caja: [docs/es/architecture.md](docs/es/architectur
 | 03 | [Docker](docs/es/labs/03-docker.md) | Servicios, perfiles, por qué `knowledge/` se hornea en la imagen |
 | 04 | [DVC + SeaweedFS](docs/es/labs/04-dvc-seaweedfs.md) | Versionar documentos con un storage self-hosted, con interfaz web — sin cuenta de ningún proveedor |
 | 05 | [Evaluación](docs/es/labs/05-evaluation.md) | Golden set, puerta de calidad, `prompt_hash` y `release` |
-| 06 | [GitHub Actions / CI](docs/es/labs/06-github-actions-ci.md) | Qué valida cada PR, y por qué no hay despliegue |
 
 ## 💥 Break the Platform
 
@@ -105,7 +99,6 @@ docs/
 ├── (sin sufijo)     La misma documentación en inglés (default)
 └── images/          Diagramas y el banner de arriba
 
-.github/workflows/   ci.yml — lint + pytest, por PR. Nada más
 config.env           La configuración del bot: el único archivo que editás
 ```
 

@@ -25,7 +25,6 @@ trendy. Where a more "obvious" alternative got ruled out, the reason is spelled 
 | Piece | What for | Why this one and not another |
 | --- | --- | --- |
 | **Docker Compose** | Orchestrates the whole stack on a single machine | No Kubernetes to justify: everything runs on one node, yours. See [Lab 03](labs/03-docker.md) |
-| **GitHub Actions** | CI — validates every PR | Lint + pytest only, no deploy: there's no cloud to deploy to. See [Lab 06](labs/06-github-actions-ci.md) |
 
 ## Security
 

@@ -25,9 +25,6 @@
   invoca a mano, contra un gateway que ya está arriba.
 - **`DVC` + `SeaweedFS`**: perfil `"dvc"`, tampoco arranca con `up`. Resuelve un problema distinto
   (versionar los documentos fuente) que no tiene nada que ver con responder preguntas.
-- **`GitHub Actions`**: ni siquiera corre en tu máquina — y **nunca llega a tocar el runtime**. No
-  hay flecha de CI hacia ningún contenedor del diagrama, a propósito: ver
-  [Lab 06](labs/06-github-actions-ci.md) para por qué.
 
 ## Por qué el índice es de solo lectura desde el gateway
 
