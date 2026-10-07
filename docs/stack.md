@@ -47,4 +47,4 @@ trendy. Where a more "obvious" alternative got ruled out, the reason is spelled 
 
 ---
 
-**[Español](../es/stack.md)**
+**[Español](es/stack.md)**

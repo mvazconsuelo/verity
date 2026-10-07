@@ -32,4 +32,4 @@ in your checkout, the code is the source of truth, not this document.
 
 ---
 
-**[Español](../es/README.md)**
+**[Español](es/README.md)**

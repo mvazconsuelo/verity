@@ -181,4 +181,4 @@ document a system: by showing how it breaks, not just how it's supposed to work.
 
 ---
 
-**[Español](../es/break.md)**
+**[Español](es/break.md)**

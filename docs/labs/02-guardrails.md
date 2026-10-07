@@ -12,8 +12,8 @@ embeddings already capture that.
 ## Semantic routing, not keyword matching
 
 [`rag/build_index.py`](../../app/rag/build_index.py) defines a fixed list of references
-(`GREETING_REFERENCES`: "hola", "buenos días", "qué tal"...) and embeds them **once**, when the
-index gets built — stored in `index.db`'s `phrases` table.
+(`GREETING_REFERENCES`: "hola", "buenos días", "qué tal"... — "hi", "good morning", "what's up") and
+embeds them **once**, when the index gets built — stored in `index.db`'s `phrases` table.
 
 [`gateway/guardrails.py`](../../app/gateway/guardrails.py), `is_greeting()`: compares the question's
 vector (the same one already computed for RAG, zero extra calls) against those reference vectors. If
@@ -21,10 +21,11 @@ the maximum similarity clears `MIN_SIMILARITY_GREETING` (0.75 — stricter than 
 because a false positive here is harder to notice), it answers directly:
 
 ```python
-GREETING_ANSWER = "¡Hola! ¿En qué te puedo ayudar?"
+GREETING_ANSWER = "¡Hola! ¿En qué te puedo ayudar?"  # "Hi! How can I help you?"
 ```
 
-**Try it yourself:** ask "buenas tardes" and then "hola" — neither spends a call to the chat model
+**Try it yourself:** ask "buenas tardes" ("good afternoon") and then "hola" ("hi") — neither spends
+a call to the chat model
 (watch the latency, or `docker compose logs ollama` while you ask: no `/api/chat` request should
 show up for either one).
 

@@ -38,4 +38,4 @@ explains.
 
 ---
 
-**[Español](../es/references.md)**
+**[Español](es/references.md)**

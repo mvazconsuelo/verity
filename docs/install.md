@@ -80,4 +80,4 @@ extra to configure. Full detail: [Lab 04](labs/04-dvc-seaweedfs.md).
 
 ---
 
-**[Español](../es/install.md)**
+**[Español](es/install.md)**

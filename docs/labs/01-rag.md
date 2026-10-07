@@ -20,6 +20,9 @@ El envío estándar cuesta $4.99, gratis en pedidos desde $50...
 Enviamos a todo el territorio nacional...
 ```
 
+In English: `# Shipping` / `## Timelines` (standard: 3-5 business days, express: 24-48h) /
+`## Costs` ($4.99 standard, free over $50) / `## Coverage` (national only).
+
 (The bot's own documents and answers stay in Spanish on purpose — see `prompts/system.md`. The
 mechanics below are language-agnostic.)
 

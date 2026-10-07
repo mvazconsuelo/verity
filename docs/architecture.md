@@ -47,4 +47,4 @@ watch it fail live).
 
 ---
 
-**[Español](../es/architecture.md)**
+**[Español](es/architecture.md)**

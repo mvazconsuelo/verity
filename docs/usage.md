@@ -68,10 +68,13 @@ Needs `x-api-key`. The only endpoint that costs a model call (unless a guardrail
 see [Lab 02](labs/02-guardrails.md)).
 
 ```bash
+# the example documents (and the bot's answers) are in Spanish on purpose — see "What to put in
+# app/knowledge/" below. The question itself can be asked in whatever language you write your
+# documents and prompt in.
 curl -X POST http://localhost:8000/ask \
   -H "content-type: application/json" \
   -H "x-api-key: your-key" \
-  -d '{"question": "¿cuánto tarda el envío estándar?"}'
+  -d '{"question": "¿cuánto tarda el envío estándar?"}'   # "how long does standard shipping take?"
 ```
 ```json
 {
@@ -84,6 +87,7 @@ curl -X POST http://localhost:8000/ask \
   "sources": ["envios.md#Plazos"]
 }
 ```
+(`answer`: "Standard shipping takes 3 to 5 business days.")
 
 `sources` tells you exactly which document and section backed the answer (empty if the question got
 short-circuited by a guardrail — a greeting, or "I don't have that information"). `question` is
@@ -120,13 +124,13 @@ bot either can't find anything or returns noisy, unrelated chunks. Full mechanic
 
    ```markdown
    <!-- good: a question about cost only pulls in cost-relevant text -->
-   ## Costos
-   El envío estándar cuesta $4.99, gratis en pedidos desde $50.
+   ## Shipping cost
+   Standard shipping costs $4.99, free on orders over $50.
 
-   <!-- worse: shipping cost, return policy and store hours all in one section -->
-   ## Información general
-   El envío estándar cuesta $4.99... Las devoluciones se aceptan hasta 30 días...
-   El local abre de 9 a 18...
+   <!-- worse: shipping cost, return policy and store hours all crammed into one section -->
+   ## General info
+   Standard shipping costs $4.99... Returns are accepted within 30 days...
+   The store is open 9 to 6...
    ```
 
    The first version means a search for "shipping cost" retrieves *only* shipping-cost text. The

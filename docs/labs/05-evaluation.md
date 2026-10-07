@@ -10,11 +10,13 @@ why every answer carries a `prompt_hash` pinned to it.
 ```json
 {"id": "q01", "question": "¿Cuánto tarda el envío estándar?", "expected": "De 3 a 5 días hábiles.", "keywords": ["3 a 5"], "source": "envios.md", "answerable": true}
 ```
+(`question`: "How long does standard shipping take?" · `expected`: "3 to 5 business days.")
 
 - `answerable: true` → passes if the answer contains **all** the `keywords` (not an exact text
   match — the model can phrase it differently, what matters is that the fact is in there).
 - `answerable: false` → passes if the answer *admits it doesn't know* (a fixed list of phrases in
-  [`run_eval.py`](../../app/eval/run_eval.py): "no tengo", "no dispongo"...). These are questions
+  [`run_eval.py`](../../app/eval/run_eval.py): "no tengo", "no dispongo"... — "I don't have", "I
+  don't offer"). These are questions
   made up on purpose, with no answer in any document — they measure whether the bot makes things up
   when it doesn't know, which is the most expensive mistake a customer-support bot can make.
 
