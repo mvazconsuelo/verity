@@ -9,7 +9,7 @@
 ![Ollama](https://img.shields.io/badge/ollama-qwen2.5_%2B_bge--m3-0B0F14?style=for-the-badge&logo=ollama&logoColor=22D3EE&labelColor=0B0F14)
 ![DVC](https://img.shields.io/badge/datos-DVC_%2B_SeaweedFS-0B0F14?style=for-the-badge&logo=dvc&logoColor=22D3EE&labelColor=0B0F14)
 
-**[Instalación](docs/es/install.md)** · **[Uso](docs/es/usage.md)** · **[Labs](#-labs)** · **[Break the Platform](docs/es/break.md)** · **[El stack](docs/es/stack.md)** · **[Arquitectura](docs/es/architecture.md)** · **[Referencias](docs/es/references.md)** · **[Toda la documentación](docs/es/README.md)**
+**[Instalación](docs/es/install.md)** · **[Uso](docs/es/usage.md)** · **[El stack](docs/es/stack.md)** · **[Arquitectura](docs/es/architecture.md)** · **[Referencias](docs/es/references.md)** · **[Toda la documentación](docs/es/README.md)**
 
 [English](README.md) · **Español**
 
@@ -17,15 +17,13 @@
 
 ## ⚡ La idea
 
-**Verity no es "otro chatbot": es un laboratorio de LLMOps que usa uno como excusa.** Lo construís,
-lo evaluás con un golden set, lo versionás, lo rompés a propósito y lo entendés — llevando a la
-práctica el ciclo completo: prompts versionados, RAG con umbral de confianza, guardrails semánticos,
-evaluación repetible con puerta de calidad, y versionado de datos — **todo corriendo en tu propia
-máquina, sin nube, sin tarjeta de crédito, sin cuentas que crear.**
+**Verity es un bot de atención al cliente que responde solo con tu propia documentación.** RAG con
+umbral de confianza, guardrails semánticos, prompts versionados, evaluación con golden set y puerta
+de calidad, y versionado de datos — **todo corriendo en tu propia máquina, sin nube, sin tarjeta de
+crédito, sin cuentas que crear.**
 
 > [!NOTE]
-> Pensado para aprender leyendo código real, no solo documentación. Cada afirmación de este README
-> apunta al archivo que la respalda.
+> Cada afirmación de este README apunta al archivo que la respalda.
 
 ## 🧱 Stack
 
@@ -46,25 +44,6 @@ Por qué cada una y no otra: [docs/es/stack.md](docs/es/stack.md).
 
 No hay pipeline de despliegue, porque no hay nube a la que desplegar — `docker compose up`, en tu
 máquina, **es** el despliegue. Detalle caja por caja: [docs/es/architecture.md](docs/es/architecture.md).
-
-## 🧪 Labs
-
-| # | Lab | Aprendés |
-| --- | --- | --- |
-| 01 | [RAG](docs/es/labs/01-rag.md) | Troceo por secciones, embeddings, el umbral de confianza |
-| 02 | [Guardrails](docs/es/labs/02-guardrails.md) | Enrutado semántico (saludo vs. pregunta real) sin modelo extra |
-| 03 | [Docker](docs/es/labs/03-docker.md) | Servicios, perfiles, por qué `knowledge/` se hornea en la imagen |
-| 04 | [DVC + SeaweedFS](docs/es/labs/04-dvc-seaweedfs.md) | Versionar documentos con un storage self-hosted, con interfaz web — sin cuenta de ningún proveedor |
-| 05 | [Evaluación](docs/es/labs/05-evaluation.md) | Golden set, puerta de calidad, `prompt_hash` y `release` |
-
-## 💥 Break the Platform
-
-7 fallas reales, provocadas a propósito: **provocar → qué ves → dónde mirar → causa → arreglo →
-lección.**
-
-Gateway que no arranca sin claves · documento editado que el bot ignora · índice con el modelo de
-embeddings equivocado · golden set vacío · bucket de SeaweedFS inexistente · rate limit · un secreto
-opcional que por default no hace nada → [escenarios completos](docs/es/break.md)
 
 ## 🚀 Empezar
 
@@ -95,7 +74,7 @@ app/
 └── docker-compose.yml
 
 docs/
-├── es/              Toda la documentación educativa en español
+├── es/              Toda la documentación en español
 ├── (sin sufijo)     La misma documentación en inglés (default)
 └── images/          Diagramas y el banner de arriba
 

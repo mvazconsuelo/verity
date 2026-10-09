@@ -45,7 +45,7 @@ Full API reference (every endpoint, every error you'll actually hit) and how to 
 `knowledge/` so search actually works: [Usage](usage.md).
 
 (If you didn't set `API_KEYS` in your environment, `run.sh` already ran with `AUTH_DISABLED=true` —
-see [Lab 02: Guardrails](labs/02-guardrails.md) for why that's safe only locally.)
+safe for local use only, see [`gateway/auth.py`](../app/gateway/auth.py).)
 
 ## 3. (Optional) Version your own documents with DVC
 
@@ -60,23 +60,22 @@ make dvc-pull    # fetches them back (e.g. on another machine)
 ```
 
 Browse what got saved at `http://localhost:8888/buckets/knowledge/` — a web UI included, nothing
-extra to configure. Full detail: [Lab 04](labs/04-dvc-seaweedfs.md).
+extra to configure.
 
 ## 4. Adapt it to your own business
 
 1. Replace the `.md` files in `app/knowledge/` with your real documentation (see
-   [Lab 01](labs/01-rag.md) for the format the chunker expects).
-2. Write 2-3 questions per document in `app/eval/golden.jsonl` (see [Lab 05](labs/05-evaluation.md)).
+   [Usage](usage.md) for the format the chunker expects).
+2. Write 2-3 questions per document in `app/eval/golden.jsonl` (see [Usage](usage.md)).
 3. Adjust `config.env` if needed (`MIN_SIMILARITY`, `TOP_K`, the `EVAL_MIN_*` thresholds).
 4. `make local` again and look at the exam report before trusting the bot's answers.
 
 ## If something doesn't start
 
 - **The gateway won't start**: check you have `API_KEYS` in your environment, or `AUTH_DISABLED=true`
-  (only for trying it out — never in anything exposed). See [Break the Platform](break.md#1-the-gateway-wont-start).
+  (only for trying it out — never in anything exposed).
 - **The exam takes forever / times out**: the first run downloads the models; run
   `docker compose logs ollama` to see the progress.
-- More real scenarios, provoked on purpose: [Break the Platform](break.md).
 
 ---
 

@@ -65,7 +65,7 @@ curl http://localhost:8000/config -H "x-api-key: your-key"
 ### `POST /ask`
 
 Needs `x-api-key`. The only endpoint that costs a model call (unless a guardrail short-circuits it —
-see [Lab 02](labs/02-guardrails.md)).
+see [`gateway/guardrails.py`](../app/gateway/guardrails.py)).
 
 ```bash
 curl -X POST http://localhost:8000/ask \
@@ -98,16 +98,16 @@ before the request ever reaches RAG.
 | Status | When | See |
 | --- | --- | --- |
 | `401` | Missing or wrong `x-api-key` | [`gateway/auth.py`](../app/gateway/auth.py) |
-| `403` | `ORIGIN_VERIFY_SECRET` is set and the header doesn't match (doesn't apply by default) | [Break the Platform #7](break.md#7-origin_verify_secret-by-default-does-nothing) |
+| `403` | `ORIGIN_VERIFY_SECRET` is set and the header doesn't match (doesn't apply by default) | [`gateway/auth.py`](../app/gateway/auth.py) |
 | `422` | Question empty or too long | Pydantic validation in [`gateway/endpoints.py`](../app/gateway/endpoints.py) |
-| `429` | Rate limit hit | [Break the Platform #6](break.md#6-rate-limit-429-with-retry-after) |
+| `429` | Rate limit hit, `Retry-After` header tells you how long | [`gateway/auth.py`](../app/gateway/auth.py) |
 | `502` | Ollama didn't respond | `gateway/endpoints.py`, catches `httpx.HTTPError` |
 
 ## What to put in `app/knowledge/`
 
 This is what actually feeds the embeddings — get it right and search works; get it wrong and the
-bot either can't find anything or returns noisy, unrelated chunks. Full mechanics in
-[Lab 01](labs/01-rag.md); here's what to actually do when writing a document:
+bot either can't find anything or returns noisy, unrelated chunks. Here's what to actually do when
+writing a document:
 
 1. **One `.md` file per topic area is plenty** — you don't need one file per fact. The project's own
    `app/knowledge/envios.md` covers shipping times, costs and coverage in one file, split into
@@ -141,15 +141,12 @@ bot either can't find anything or returns noisy, unrelated chunks. Full mechanic
    Catches format issues, oversized files (`MAX_FILE_KB`), and unsupported extensions (only `.md`
    is read — anything else is silently ignored, with a warning).
 6. **Rebuild after every change** — `knowledge/` is baked into the image at build time, not mounted
-   live. See [Break the Platform #2](break.md#2-i-edited-a-document-and-the-bot-keeps-answering-the-old-one)
-   if this bites you.
+   live (`docker compose build && docker compose up -d`, or just `make local` again). Editing the
+   file on disk alone does nothing to a container that's already running.
 7. **Write 2-3 golden-set questions per document as you go** — see the next section. It's much
    easier while you remember what you just put in the document than to reconstruct it later.
 
 ## Building your own golden set
-
-The concepts (what it's for, how the metrics and the quality gate work) are in
-[Lab 05](labs/05-evaluation.md) — this is the practical "how do I actually add one" version.
 
 1. **One file, one question per line:** [`app/eval/golden.jsonl`](../app/eval/golden.jsonl), JSONL
    (not a JSON array — each line is its own complete JSON object).

@@ -38,9 +38,8 @@ réplica; la propiedad queda gratis si algún día hiciera falta más de una.)
 El Dockerfile del gateway hace `COPY knowledge ./knowledge` — es parte de la imagen, no un volumen.
 Esto significa que **la imagen entera es la unidad de versión**: el tag de una imagen fija a la vez
 el código, el prompt y los documentos que va a usar para responder. Cambiar un documento sin
-reconstruir la imagen no tiene efecto (ver [Lab 03](labs/03-docker.md) para el detalle, y
-[Break the Platform #2](break.md#2-cambi%C3%A9-un-documento-y-el-bot-sigue-respondiendo-lo-viejo)
-para verlo fallar en vivo).
+reconstruir la imagen no tiene efecto — `docker compose build && docker compose up -d` (o
+`make local` de nuevo) es lo que lo toma.
 
 ---
 

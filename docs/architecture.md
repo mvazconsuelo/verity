@@ -38,9 +38,8 @@ another. (Today a single replica runs; the property comes for free if more are e
 The gateway's Dockerfile does `COPY knowledge ./knowledge` — it's part of the image, not a volume.
 This means **the whole image is the unit of version**: an image tag fixes the code, the prompt and
 the documents it's going to answer with, all at once. Changing a document without rebuilding the
-image has no effect (see [Lab 03](labs/03-docker.md) for the detail, and
-[Break the Platform #2](break.md#2-i-edited-a-document-and-the-bot-keeps-answering-the-old-one) to
-watch it fail live).
+image has no effect — `docker compose build && docker compose up -d` (or `make local` again) is
+what picks it up.
 
 ---
 

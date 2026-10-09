@@ -44,8 +44,8 @@ curl -X POST http://localhost:8000/ask \
 Referencia completa de la API (cada endpoint, cada error que te vas a encontrar de verdad) y cómo
 escribir documentos para `knowledge/` para que la búsqueda funcione de verdad: [Uso](usage.md).
 
-(Si no pusiste `API_KEYS` en tu entorno, `run.sh` ya corrió con `AUTH_DISABLED=true` — ver
-[Lab 02: Guardrails](labs/02-guardrails.md) para el detalle de por qué eso es seguro solo en local.)
+(Si no pusiste `API_KEYS` en tu entorno, `run.sh` ya corrió con `AUTH_DISABLED=true` — seguro solo
+para uso local, ver [`gateway/auth.py`](../../app/gateway/auth.py).)
 
 ## 3. (Opcional) Versionar tus propios documentos con DVC
 
@@ -60,23 +60,22 @@ make dvc-pull    # los trae de vuelta (por ejemplo, en otra máquina)
 ```
 
 Mirá lo que quedó guardado en `http://localhost:8888/buckets/knowledge/` — interfaz web incluida,
-sin configurar nada aparte. Detalle completo: [Lab 04](labs/04-dvc-seaweedfs.md).
+sin configurar nada aparte.
 
 ## 4. Adaptalo a tu propio negocio
 
 1. Reemplazá los `.md` de `app/knowledge/` por tu documentación real (ver
-   [Lab 01](labs/01-rag.md) para el formato que espera el troceador).
-2. Escribí 2-3 preguntas por documento en `app/eval/golden.jsonl` (ver [Lab 05](labs/05-evaluation.md)).
+   [Uso](usage.md) para el formato que espera el troceador).
+2. Escribí 2-3 preguntas por documento en `app/eval/golden.jsonl` (ver [Uso](usage.md)).
 3. Ajustá `config.env` si hace falta (`MIN_SIMILARITY`, `TOP_K`, los umbrales `EVAL_MIN_*`).
 4. `make local` de nuevo y mirá el reporte del examen antes de dar por buena la respuesta del bot.
 
 ## Si algo no arranca
 
 - **El gateway no arranca**: revisá que tengas `API_KEYS` en tu entorno, o `AUTH_DISABLED=true`
-  (solo para probar — nunca en un entorno expuesto). Ver [Break the Platform](break.md#1-el-gateway-no-arranca).
+  (solo para probar — nunca en un entorno expuesto).
 - **El examen tarda mucho / falla con timeout**: la primera corrida descarga los modelos; corré
   `docker compose logs ollama` para ver el progreso.
-- Más escenarios reales, provocados a propósito: [Break the Platform](break.md).
 
 ---
 

@@ -9,22 +9,22 @@ moda. Donde se descartó una alternativa más "obvia", se explica por qué.
 | --- | --- | --- |
 | **FastAPI** | La API del bot (`gateway/`) | Async nativo (importa: cada `/ask` espera a Ollama), validación de entrada con Pydantic gratis |
 | **Ollama** | Sirve el modelo de chat y el de embeddings, local | Sin depender de una API externa de modelos — ni costo por token, ni tus documentos saliendo de tu máquina |
-| **qwen2.5:1.5b** | Modelo de chat | Chico a propósito: corre en CPU, sin GPU, en un Mac o Linux. El trade-off es calidad — ver [Lab 05](labs/05-evaluation.md) sobre cómo se mide eso |
+| **qwen2.5:1.5b** | Modelo de chat | Chico a propósito: corre en CPU, sin GPU, en un Mac o Linux. El trade-off es calidad |
 | **bge-m3** | Modelo de embeddings | Multilingüe, buen desempeño en MTEB para su tamaño, corre en el mismo Ollama que el chat (un solo servicio, no dos) |
-| **sqlite-vec** | Índice vectorial (`index.db`) | Un archivo, sin servidor aparte — para los pocos miles de chunks de un negocio chico, de sobra. Ver [Lab 01](labs/01-rag.md) |
+| **sqlite-vec** | Índice vectorial (`index.db`) | Un archivo, sin servidor aparte — para los pocos miles de chunks de un negocio chico, de sobra |
 
 ## Datos
 
 | Pieza | Para qué | Por qué esta y no otra |
 | --- | --- | --- |
 | **DVC** | Versiona `app/knowledge/` más allá de git | git versiona bien texto, pero no te da "subir/bajar un snapshot completo" contra un storage aparte — útil si los documentos crecen o dejan de ser solo texto |
-| **SeaweedFS** | El remoto S3 de DVC, self-hosted | Imagen oficial, sin login, trae interfaz web de archivos de fábrica — ver [Lab 04](labs/04-dvc-seaweedfs.md) |
+| **SeaweedFS** | El remoto S3 de DVC, self-hosted | Imagen oficial, sin login, trae interfaz web de archivos de fábrica |
 
 ## Plataforma
 
 | Pieza | Para qué | Por qué esta y no otra |
 | --- | --- | --- |
-| **Docker Compose** | Orquesta todo el stack en una sola máquina | No hay Kubernetes que justificar: todo corre en un solo nodo, el tuyo. Ver [Lab 03](labs/03-docker.md) |
+| **Docker Compose** | Orquesta todo el stack en una sola máquina | No hay Kubernetes que justificar: todo corre en un solo nodo, el tuyo |
 
 ## Seguridad
 
@@ -32,7 +32,7 @@ moda. Donde se descartó una alternativa más "obvia", se explica por qué.
 | --- | --- |
 | **Clave de API + rate limit** | `gateway/auth.py` — cierra el gateway por completo si no hay `API_KEYS`, no hay forma de "olvidarse" de ponerlas |
 | **`ORIGIN_VERIFY_SECRET`** (opcional) | Si algún día ponés un proxy/túnel delante, esta cabecera evita que alguien le hable al gateway salteándolo |
-| **Guardrails semánticos** | `gateway/guardrails.py` — ver [Lab 02](labs/02-guardrails.md) |
+| **Guardrails semánticos** | `gateway/guardrails.py` |
 
 ## Lo que explícitamente NO hay
 

@@ -9,7 +9,7 @@
 ![Ollama](https://img.shields.io/badge/Ollama-qwen2.5_%2B_bge--m3-0B0F14?style=for-the-badge&logo=ollama&logoColor=22D3EE&labelColor=0B0F14)
 ![Data](https://img.shields.io/badge/Data-DVC_%2B_SeaweedFS-0B0F14?style=for-the-badge&logo=dvc&logoColor=22D3EE&labelColor=0B0F14)
 
-**[Install](docs/install.md)** · **[Usage](docs/usage.md)** · **[Labs](#-labs)** · **[Break the Platform](docs/break.md)** · **[The stack](docs/stack.md)** · **[Architecture](docs/architecture.md)** · **[References](docs/references.md)** · **[Full documentation](docs/README.md)**
+**[Install](docs/install.md)** · **[Usage](docs/usage.md)** · **[The stack](docs/stack.md)** · **[Architecture](docs/architecture.md)** · **[References](docs/references.md)** · **[Full documentation](docs/README.md)**
 
 **English** · [Español](README.es.md)
 
@@ -17,15 +17,13 @@
 
 ## ⚡ The idea
 
-**Verity isn't "just another chatbot": it's an LLMOps lab that uses one as an excuse.** You build it,
-evaluate it with a golden set, version it, break it on purpose, and understand it — putting the full
-cycle into practice: versioned prompts, RAG with a confidence threshold, semantic guardrails,
-repeatable evaluation with a quality gate, and data versioning — **all running on your own machine,
-no cloud, no credit card, no accounts to create.**
+**Verity is a customer support bot that answers only from your own documentation.** RAG with a
+confidence threshold, semantic guardrails, versioned prompts, golden-set evaluation with a quality
+gate, and data versioning — **all running on your own machine, no cloud, no credit card, no accounts
+to create.**
 
 > [!NOTE]
-> Built to be learned by reading real code, not just documentation. Every claim in this README
-> points to the file that backs it up.
+> Every claim in this README points to the file that backs it up.
 
 ## 🧱 Stack
 
@@ -46,25 +44,6 @@ Why each one, and not another: [docs/stack.md](docs/stack.md).
 
 There's no deploy pipeline, because there's no cloud to deploy to — `docker compose up`, on your
 machine, **is** the deployment. Box-by-box detail: [docs/architecture.md](docs/architecture.md).
-
-## 🧪 Labs
-
-| # | Lab | You learn |
-| --- | --- | --- |
-| 01 | [RAG](docs/labs/01-rag.md) | Section-based chunking, embeddings, the confidence threshold |
-| 02 | [Guardrails](docs/labs/02-guardrails.md) | Semantic routing (greeting vs. real question) without an extra model |
-| 03 | [Docker](docs/labs/03-docker.md) | Services, profiles, why `knowledge/` gets baked into the image |
-| 04 | [DVC + SeaweedFS](docs/labs/04-dvc-seaweedfs.md) | Versioning documents with a self-hosted, web-UI storage — no cloud account needed |
-| 05 | [Evaluation](docs/labs/05-evaluation.md) | Golden set, quality gate, `prompt_hash` and `release` |
-
-## 💥 Break the Platform
-
-7 real failures, provoked on purpose: **provoke → what you see → where to look → cause → fix →
-lesson.**
-
-A gateway that won't start without keys · an edited document the bot ignores · an index with the
-wrong embedding model · an empty golden set · a missing SeaweedFS bucket · rate limiting · an
-optional secret that by default does nothing → [full scenarios](docs/break.md)
 
 ## 🚀 Get started
 
@@ -95,7 +74,7 @@ app/
 └── docker-compose.yml
 
 docs/
-├── (no suffix)      All the educational documentation, in English (default)
+├── (no suffix)      All the documentation, in English (default)
 ├── es/              The same documentation, in Spanish
 └── images/          Diagrams and the banner above
 

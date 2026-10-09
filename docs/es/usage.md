@@ -66,7 +66,7 @@ curl http://localhost:8000/config -H "x-api-key: tu-clave"
 ### `POST /ask`
 
 Necesita `x-api-key`. El único endpoint que gasta una llamada al modelo (salvo que un guardrail lo
-corte antes — ver [Lab 02](labs/02-guardrails.md)).
+corte antes — ver [`gateway/guardrails.py`](../../app/gateway/guardrails.py)).
 
 ```bash
 curl -X POST http://localhost:8000/ask \
@@ -96,16 +96,16 @@ pregunta llegue siquiera a RAG.
 | Status | Cuándo | Ver |
 | --- | --- | --- |
 | `401` | Falta `x-api-key` o está mal | [`gateway/auth.py`](../../app/gateway/auth.py) |
-| `403` | `ORIGIN_VERIFY_SECRET` está configurado y la cabecera no coincide (no aplica por default) | [Break the Platform #7](break.md#7-origin_verify_secret-por-default-no-hace-nada) |
+| `403` | `ORIGIN_VERIFY_SECRET` está configurado y la cabecera no coincide (no aplica por default) | [`gateway/auth.py`](../../app/gateway/auth.py) |
 | `422` | Pregunta vacía o demasiado larga | Validación de Pydantic en [`gateway/endpoints.py`](../../app/gateway/endpoints.py) |
-| `429` | Límite de peticiones alcanzado | [Break the Platform #6](break.md#6-rate-limit-429-con-retry-after) |
+| `429` | Límite de peticiones alcanzado, la cabecera `Retry-After` dice cuánto esperar | [`gateway/auth.py`](../../app/gateway/auth.py) |
 | `502` | Ollama no respondió | `gateway/endpoints.py`, atrapa `httpx.HTTPError` |
 
 ## Qué poner en `app/knowledge/`
 
 Esto es lo que realmente alimenta los embeddings — hacelo bien y la búsqueda funciona; hacelo mal y
-el bot no encuentra nada, o devuelve chunks ruidosos sin relación. Mecánica completa en
-[Lab 01](labs/01-rag.md); acá, qué hacer en la práctica al escribir un documento:
+el bot no encuentra nada, o devuelve chunks ruidosos sin relación. Acá, qué hacer en la práctica al
+escribir un documento:
 
 1. **Con un `.md` por área de tema alcanza** — no hace falta un archivo por cada dato suelto. El
    propio `app/knowledge/envios.md` del proyecto cubre plazos, costos y cobertura en un solo
@@ -140,16 +140,13 @@ el bot no encuentra nada, o devuelve chunks ruidosos sin relación. Mecánica co
    Atrapa problemas de formato, archivos demasiado grandes (`MAX_FILE_KB`), y extensiones no
    soportadas (solo se lee `.md` — el resto se ignora en silencio, con un aviso).
 6. **Reconstruí después de cada cambio** — `knowledge/` se hornea en la imagen al construirla, no se
-   monta en vivo. Ver [Break the Platform #2](break.md#2-cambi%C3%A9-un-documento-y-el-bot-sigue-respondiendo-lo-viejo)
-   si esto te agarra desprevenido.
+   monta en vivo (`docker compose build && docker compose up -d`, o directamente `make local` de
+   nuevo). Editar el archivo en el disco solo no hace nada en un contenedor que ya está corriendo.
 7. **Escribí 2-3 preguntas del golden set por documento, a medida que avanzás** — ver la próxima
    sección. Es mucho más fácil mientras te acordás qué acabás de poner en el documento que
    reconstruirlo después.
 
 ## Armar tu propio golden set
-
-Los conceptos (para qué sirve, cómo funcionan las métricas y la puerta de calidad) están en el
-[Lab 05](labs/05-evaluation.md) — esto es la versión práctica de "cómo agrego uno, en concreto".
 
 1. **Un archivo, una pregunta por línea:** [`app/eval/golden.jsonl`](../../app/eval/golden.jsonl),
    formato JSONL (no un array JSON — cada línea es su propio objeto JSON completo).
