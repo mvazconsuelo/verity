@@ -7,9 +7,9 @@ import os
 
 import httpx
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel, Field
 
 from gateway import auth, guardrails, prompt, retrieval
+from gateway.schemas import AskRequest, AskResponse
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 MODEL = os.getenv("MODEL", "qwen2.5:1.5b")
@@ -18,20 +18,6 @@ TEMPERATURE = float(os.getenv("TEMPERATURE", "0"))  # 0 = repeatable answers
 REQUEST_TIMEOUT_S = float(os.getenv("REQUEST_TIMEOUT_S", "60"))  # how long to wait for Ollama
 
 router = APIRouter()
-
-
-class AskRequest(BaseModel):
-    question: str = Field(min_length=1, max_length=auth.MAX_QUESTION_CHARS)
-
-
-class AskResponse(BaseModel):
-    answer: str
-    model: str
-    tokens: int
-    release: str
-    prompt_hash: str
-    temperature: float
-    sources: list[str] = []  # retrieved chunks, as "document.md#Section"
 
 
 @router.get("/health")

@@ -5,6 +5,7 @@ wires things together — the logic for each concern lives in its own module:
     prompt.py       what gets told to the model (system.md, template.md, full documents)
     retrieval.py    RAG mechanics: embed the question, search the index, return chunks
     guardrails.py   policy: is there enough confidence to answer? is it a greeting?
+    schemas.py      request/response models (Pydantic)
     endpoints.py    the gateway's API surface, using all of the above
 """
 import os
